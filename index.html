@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Alchemize — Shadow Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-base: #060A1A;
+  --bg-surface: #0D1530;
+  --bg-card: rgba(13, 21, 48, 0.8);
+  --accent: #2D1B3D;
+  --accent-glow: rgba(45, 27, 61, 0.4);
+  --text: #DDD6CB;
+  --text-dim: #8A7E72;
+  --text-bright: #F0EBE0;
+  --gold: #C9A84C;
+  --lunar: #8FA4B8;
+  --border: rgba(221, 214, 203, 0.08);
+  --transition-speed: 0.8s;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-base);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+body {
+  display: flex; flex-direction: column; align-items: center;
+}
+h1, h2, h3, h4, .serif {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+}
+::selection { background: var(--gold); color: #060A1A; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius: 2px; }
+
+/* Sacred Geometry Background */
+#sacred-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+#sacred-bg svg {
+  position: absolute; width: 120%; height: 120%;
+  top: -10%; left: -10%;
+  opacity: 0.03;
+  animation: rotateSlow 120s linear infinite;
+}
+@keyframes rotateSlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#sacred-bg .ring2 { animation-direction: reverse; animation-duration: 180s; }
+
+/* Layout */
+#app {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 480px;
+  min-height: 100vh;
+  padding: 20px 16px 100px;
+  display: flex; flex-direction: column;
+}
+
+/* Views */
+.view { display: none; flex-direction: column; gap: 20px; }
+.view.active { display: flex; }
+
+/* Phase Header */
+.phase-header {
+  text-align: center; padding: 16px 0 8px;
+  font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color var(--transition-speed) ease;
+}
+.phase-header .phase-symbol { font-size: 28px; display: block; margin-bottom: 4px; }
+.phase-header .phase-name { font-weight: 500; }
+.phase-header .moon-info { font-size: 11px; letter-spacing: 1px; margin-top: 2px; opacity: 0.7; }
+
+/* Buttons */
+.btn {
+  font-family: 'Inter', sans-serif;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.btn:hover { background: var(--accent); border-color: var(--accent); }
+.btn-primary {
+  background: var(--gold); color: #060A1A; border-color: var(--gold);
+  font-weight: 600;
+}
+.btn-primary:hover { background: #d4b85a; border-color: #d4b85a; }
+.btn-small {
+  padding: 8px 16px; font-size: 12px; border-radius: 8px;
+}
+.btn-claim {
+  background: linear-gradient(135deg, var(--gold), #d4b85a);
+  color: #060A1A; border: none; font-weight: 700;
+  padding: 16px 32px; font-size: 16px; border-radius: 16px;
+  width: 100%; cursor: pointer; transition: all 0.3s;
+}
+.btn-claim:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(201,168,76,0.3); }
+.btn-claim:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+/* Birth chart input */
+.chart-form { display: flex; flex-direction: column; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label {
+  font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-dim); font-weight: 500;
+}
+.form-group select, .form-group input, .form-group textarea {
+  font-family: 'Inter', sans-serif;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+  width: 100%;
+  -webkit-appearance: none; appearance: none;
+}
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23DDD6CB' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.form-group select:focus, .form-group textarea:focus {
+  border-color: var(--gold);
+}
+.form-group option { background: #0D1530; color: var(--text); }
+.form-group textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+/* Signature badge */
+.sig-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Instrument Serif', serif;
+  font-size: 14px; letter-spacing: 1px;
+  padding: 6px 14px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 20px;
+}
+.sig-digits {
+  font-size: 22px; font-weight: 600;
+  background: linear-gradient(135deg, var(--gold), #d4b85a);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Journal area */
+.journal-prompt {
+  font-family: 'Instrument Serif', serif;
+  font-size: 18px;
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--text-bright);
+  padding: 8px 0;
+}
+.journal-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 12px; align-items: center;
+}
+
+/* Entries list */
+.entry-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.entry-item:last-child { border-bottom: none; }
+.entry-item:hover { opacity: 0.8; }
+.entry-date { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
+.entry-preview { font-size: 13px; margin-top: 4px; opacity: 0.8; line-height: 1.4; }
+.entry-sig { display: inline-block; margin-top: 6px; }
+
+/* Synthesis */
+.synth-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.synth-stat {
+  text-align: center; padding: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.synth-stat .number {
+  font-family: 'Instrument Serif', serif;
+  font-size: 32px;
+  color: var(--gold);
+}
+.synth-stat .label { font-size: 11px; color: var(--text-dim); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+.synth-law-bar {
+  display: flex; align-items: center; gap: 8px; margin: 4px 0;
+}
+.synth-law-bar .bar-fill {
+  height: 6px; border-radius: 3px; background: var(--gold);
+  transition: width 0.6s ease;
+}
+.synth-law-bar .law-name { font-size: 12px; min-width: 80px; }
+.synth-law-bar .law-count { font-size: 12px; color: var(--text-dim); min-width: 20px; text-align: right; }
+.synth-phase-dot {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; margin: 4px 8px 4px 0;
+}
+.synth-observation {
+  font-family: 'Instrument Serif', serif;
+  font-size: 16px; font-style: italic;
+  line-height: 1.7;
+  padding: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  border-left: 3px solid var(--gold);
+}
+
+/* Offer section */
+.offer-card {
+  text-align: center;
+  background: linear-gradient(135deg, var(--bg-card), rgba(201,168,76,0.06));
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.offer-price { font-family: 'Instrument Serif', serif; font-size: 48px; color: var(--gold); }
+.offer-label { font-size: 12px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
+.offer-sub { font-size: 14px; opacity: 0.7; margin-top: 8px; }
+.spot-counter {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 16px 0; padding: 8px 20px;
+  background: rgba(201,168,76,0.08);
+  border-radius: 20px;
+  font-size: 14px;
+}
+.spot-counter .spots-num { font-weight: 700; color: var(--gold); font-size: 18px; }
+
+/* Nav */
+#nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 10;
+  display: flex; justify-content: center;
+  padding: 12px 16px 20px;
+  background: linear-gradient(to top, var(--bg-base) 60%, transparent);
+  transition: background var(--transition-speed) ease;
+}
+.nav-inner {
+  display: flex; gap: 4px;
+  background: rgba(13,21,48,0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px;
+  max-width: 420px; width: 100%;
+}
+.nav-btn {
+  flex: 1; text-align: center; padding: 8px 6px;
+  font-size: 10px; letter-spacing: 0.5px;
+  border-radius: 14px; cursor: pointer;
+  border: none; background: transparent; color: var(--text-dim);
+  transition: all 0.3s; font-family: 'Inter', sans-serif;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.nav-btn .nav-icon { font-size: 20px; }
+.nav-btn.active {
+  background: rgba(201,168,76,0.12);
+  color: var(--gold);
+}
+.nav-btn:hover:not(.active) { color: var(--text); }
+
+/* Phase theme overrides - applied via JS */
+body.theme-nigredo {
+  --accent: #2D1B3D; --accent-glow: rgba(45,27,61,0.4);
+}
+body.theme-albedo {
+  --accent: #8FA4B8; --accent-glow: rgba(143,164,184,0.3);
+}
+body.theme-citrinitas {
+  --accent: #C9A84C; --accent-glow: rgba(201,168,76,0.3);
+}
+body.theme-rubedo {
+  --accent: #8B3A3A; --accent-glow: rgba(139,58,58,0.3);
+}
+
+/* Setup screen - first visit */
+#view-setup .app-title {
+  font-size: 36px; text-align: center;
+  margin: 40px 0 8px;
+  background: linear-gradient(135deg, var(--gold), #d4b85a, var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#view-setup .app-subtitle {
+  text-align: center; font-size: 13px; color: var(--text-dim);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* History */
+#view-history .empty-state {
+  text-align: center; padding: 40px 20px;
+  color: var(--text-dim); font-size: 14px;
+}
+
+/* Loading / empty */
+.fade-in { animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Modal / detail view */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(6,10,26,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal-content {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 440px; width: 100%;
+  max-height: 80vh; overflow-y: auto;
+}
+.modal-content .modal-close {
+  float: right; cursor: pointer; font-size: 20px;
+  opacity: 0.5; transition: opacity 0.2s;
+  background: none; border: none; color: var(--text);
+}
+.modal-content .modal-close:hover { opacity: 1; }
+
+/* Scrollable */
+.scroll-y { overflow-y: auto; }
+.hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Responsive */
+@media (max-width: 400px) {
+  #app { padding: 16px 12px 90px; }
+  .card { padding: 14px; }
+  .journal-prompt { font-size: 16px; }
+  .synth-grid { grid-template-columns: 1fr; }
+  #view-setup .app-title { font-size: 28px; }
+}
+
+/* Utility */
+.mt-8 { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mt-20 { margin-top: 20px; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.text-center { text-align: center; }
+.text-dim { color: var(--text-dim); }
+.text-gold { color: var(--gold); }
+.text-sm { font-size: 13px; }
+.text-xs { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.w-full { width: 100%; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div id="sacred-bg">
+  <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="500" cy="500" r="480" fill="none" stroke="currentColor" stroke-width="0.5"/>
+    <circle cx="500" cy="500" r="400" fill="none" stroke="currentColor" stroke-width="0.4"/>
+    <circle cx="500" cy="500" r="320" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    <circle cx="500" cy="500" r="240" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    <circle cx="500" cy="500" r="160" fill="none" stroke="currentColor" stroke-width="0.2"/>
+    <circle cx="500" cy="500" r="80" fill="none" stroke="currentColor" stroke-width="0.2"/>
+    <polygon points="500,20 780,250 780,750 500,980 220,750 220,250" fill="none" stroke="currentColor" stroke-width="0.3" opacity="0.5"/>
+    <polygon points="500,120 660,250 660,750 500,880 340,750 340,250" fill="none" stroke="currentColor" stroke-width="0.2" opacity="0.3"/>
+  </svg>
+  <svg class="ring2" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="500" cy="500" r="440" fill="none" stroke="currentColor" stroke-width="0.3" stroke-dasharray="20 40"/>
+    <circle cx="500" cy="500" r="360" fill="none" stroke="currentColor" stroke-width="0.2" stroke-dasharray="15 30"/>
+    <circle cx="500" cy="500" r="280" fill="none" stroke="currentColor" stroke-width="0.2" stroke-dasharray="10 20"/>
+    <circle cx="500" cy="500" r="200" fill="none" stroke="currentColor" stroke-width="0.15" stroke-dasharray="8 16"/>
+    <circle cx="500" cy="500" r="120" fill="none" stroke="currentColor" stroke-width="0.15" stroke-dasharray="5 10"/>
+  </svg>
+</div>
+
+<div id="app">
+  <!-- SETUP VIEW -->
+  <div id="view-setup" class="view">
+    <h1 class="app-title">Alchemize</h1>
+    <p class="app-subtitle">⚗️ Shadow Work · Daily Practice</p>
+    <div class="card">
+      <h3 style="margin-bottom:16px; font-size:18px;">Your Birth Chart</h3>
+      <p style="font-size:13px; color:var(--text-dim); margin-bottom:16px; line-height:1.5;">
+        Enter your natal placements so Alchemize can generate personalized shadow prompts based on your chart and today's transits.
+      </p>
+      <div class="chart-form">
+        <div class="form-group">
+          <label>☀️ Sun Sign</label>
+          <select id="input-sun">
+            <option value="">— Select —</option>
+            <option value="Aries">Aries</option><option value="Taurus">Taurus</option><option value="Gemini">Gemini</option>
+            <option value="Cancer">Cancer</option><option value="Leo">Leo</option><option value="Virgo">Virgo</option>
+            <option value="Libra">Libra</option><option value="Scorpio">Scorpio</option><option value="Sagittarius">Sagittarius</option>
+            <option value="Capricorn">Capricorn</option><option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>🌙 Moon Sign</label>
+          <select id="input-moon">
+            <option value="">— Select —</option>
+            <option value="Aries">Aries</option><option value="Taurus">Taurus</option><option value="Gemini">Gemini</option>
+            <option value="Cancer">Cancer</option><option value="Leo">Leo</option><option value="Virgo">Virgo</option>
+            <option value="Libra">Libra</option><option value="Scorpio">Scorpio</option><option value="Sagittarius">Sagittarius</option>
+            <option value="Capricorn">Capricorn</option><option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>⬆️ Rising Sign (Ascendant)</label>
+          <select id="input-rising">
+            <option value="">— Select —</option>
+            <option value="Aries">Aries</option><option value="Taurus">Taurus</option><option value="Gemini">Gemini</option>
+            <option value="Cancer">Cancer</option><option value="Leo">Leo</option><option value="Virgo">Virgo</option>
+            <option value="Libra">Libra</option><option value="Scorpio">Scorpio</option><option value="Sagittarius">Sagittarius</option>
+            <option value="Capricorn">Capricorn</option><option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
+          </select>
+        </div>
+        <button id="btn-save-chart" class="btn btn-primary w-full mt-8">⚗️ Begin Your Practice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAILY JOURNAL VIEW -->
+  <div id="view-daily" class="view">
+    <div class="phase-header">
+      <span class="phase-symbol" id="phase-symbol-header">⚫</span>
+      <span class="phase-name" id="phase-name-header">NIGREDO</span>
+      <div class="moon-info" id="moon-info-header">Moon in Aries · Waxing Crescent</div>
+    </div>
+
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <h3 style="font-size:16px;">Today's Session</h3>
+        <span class="sig-badge" id="sig-badge">
+          <span>3·6·9</span>
+          <span class="sig-digits" id="sig-digits">—</span>
+        </span>
+      </div>
+      <div style="border-top:1px solid var(--border); margin:12px 0;"></div>
+      <div class="journal-prompt" id="journal-prompt">
+        Loading your prompt...
+      </div>
+      <div class="journal-meta" id="journal-meta">
+        <span class="text-xs" id="prompt-moon-sign"></span>
+        <span class="text-xs" id="prompt-house"></span>
+        <span class="text-xs" id="prompt-law"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); font-weight:500;">
+        ✍️ Your Shadow Writing
+      </label>
+      <textarea id="journal-text" placeholder="Write your reflections here..." style="font-family:'Inter',sans-serif; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:10px; padding:12px 14px; color:var(--text); font-size:15px; outline:none; width:100%; resize:vertical; min-height:140px; line-height:1.6; margin-top:8px; transition:border-color 0.3s;"></textarea>
+      <div class="flex items-center justify-between mt-12">
+        <span id="session-counter" class="text-sm text-dim"></span>
+        <button id="btn-save-journal" class="btn btn-primary btn-small">Save Entry</button>
+      </div>
+    </div>
+
+    <div class="card" id="cycle-progress-card">
+      <div class="flex items-center justify-between">
+        <span class="text-xs">Cycle Progress</span>
+        <span class="text-sm text-gold" id="cycle-label">Cycle 1</span>
+      </div>
+      <div style="margin-top:8px; height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden;">
+        <div id="cycle-bar" style="height:100%; background:var(--gold); border-radius:2px; width:0%; transition:width 0.6s ease;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY VIEW -->
+  <div id="view-history" class="view">
+    <h2 style="font-size:22px; margin-bottom:4px;">📜 Journal History</h2>
+    <p class="text-sm text-dim" style="margin-bottom:12px;">Your recorded sessions</p>
+    <div id="entries-list"></div>
+  </div>
+
+  <!-- SYNTHESIS VIEW -->
+  <div id="view-synthesis" class="view">
+    <h2 style="font-size:22px; text-align:center;">🌀 Cycle Synthesis</h2>
+    <p class="text-sm text-dim text-center" style="margin-bottom:12px;">Every 9 sessions completes an alchemical cycle</p>
+    <div id="synthesis-content"></div>
+  </div>
+
+  <!-- OFFER VIEW -->
+  <div id="view-offer" class="view">
+    <h2 style="font-size:22px; text-align:center;">💎 Founding Offer</h2>
+    <p class="text-sm text-dim text-center" style="margin-bottom:16px;">Be among the first to alchemize</p>
+    <div class="card offer-card">
+      <p class="offer-label">One-Time · Lifetime Access</p>
+      <div class="offer-price">€59</div>
+      <p class="offer-sub">Then €9.99/month after founding batch</p>
+      <div class="spot-counter">
+        <span>🔥</span>
+        <span id="spots-display"><span class="spots-num">50</span> spots remaining</span>
+      </div>
+      <button id="btn-claim" class="btn-claim">⚗️ Claim Your Spot</button>
+      <p class="text-xs text-dim mt-12">50 founding spots total · No recurring commitment if you join now</p>
+    </div>
+    <div class="card" style="margin-top:4px;">
+      <p class="text-sm" style="line-height:1.6;">
+        ✦ Lifetime prompt generation ✦ Personalized shadow work ✦ Offline-first privacy
+        ✦ All future phases ✦ Priority feature requests
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div id="nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" data-view="daily">
+      <span class="nav-icon">⚗️</span>
+      <span>Today</span>
+    </button>
+    <button class="nav-btn" data-view="history">
+      <span class="nav-icon">📜</span>
+      <span>Journal</span>
+    </button>
+    <button class="nav-btn" data-view="synthesis">
+      <span class="nav-icon">🌀</span>
+      <span>Cycle</span>
+    </button>
+    <button class="nav-btn" data-view="offer">
+      <span class="nav-icon">💎</span>
+      <span>Offer</span>
+    </button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-content">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// ALCHEMIZE — Core Engine
+// ============================================================
+
+// --- Constants ---
+const ZODIAC = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const SIGIL = { 'Aries':'♈','Taurus':'♉','Gemini':'♊','Cancer':'♋','Leo':'♌','Virgo':'♍','Libra':'♎','Scorpio':'♏','Sagittarius':'♐','Capricorn':'♑','Aquarius':'♒','Pisces':'♓' };
+
+const HERMETIC_LAWS = {
+  Aries: 'Vibration', Taurus: 'Correspondence', Gemini: 'Mentalism',
+  Cancer: 'Polarity', Leo: 'Vibration', Virgo: 'Cause & Effect',
+  Libra: 'Polarity', Scorpio: 'Gender', Sagittarius: 'Rhythm',
+  Capricorn: 'Cause & Effect', Aquarius: 'Correspondence', Pisces: 'Rhythm'
+};
+const LAW_INDEX = { 'Mentalism':1, 'Correspondence':2, 'Vibration':3, 'Polarity':4, 'Rhythm':5, 'Cause & Effect':6, 'Gender':7 };
+
+const PHASE_MAP = {
+  'New Moon':'Nigredo','Waxing Crescent':'Nigredo',
+  'First Quarter':'Albedo','Waxing Gibbous':'Albedo',
+  'Full Moon':'Citrinitas','Waning Gibbous':'Citrinitas',
+  'Last Quarter':'Rubedo','Waning Crescent':'Rubedo'
+};
+const PHASE_INDEX = { 'Nigredo':1, 'Albedo':2, 'Citrinitas':3, 'Rubedo':4 };
+const PHASE_SYMBOL = { 'Nigredo':'⚫','Albedo':'⚪','Citrinitas':'🟡','Rubedo':'🔴' };
+const PHASE_THEME = {
+  'Nigredo': { body: 'theme-nigredo', bg: '#060A1A', surface: '#0D1530', accent: '#2D1B3D' },
+  'Albedo': { body: 'theme-albedo', bg: '#0D1530', surface: '#182545', accent: '#8FA4B8' },
+  'Citrinitas': { body: 'theme-citrinitas', bg: '#0F1420', surface: '#1A1F30', accent: '#C9A84C' },
+  'Rubedo': { body: 'theme-rubedo', bg: '#1A0D0D', surface: '#2A1515', accent: '#8B3A3A' }
+};
+
+const HOUSE_THEMES = [
+  'Self & Identity',
+  'Values & Resources',
+  'Communication & Learning',
+  'Home & Family',
+  'Creativity & Romance',
+  'Health & Service',
+  'Partnerships',
+  'Transformation & Shared Resources',
+  'Philosophy & Travel',
+  'Career & Public Life',
+  'Community & Friendships',
+  'Subconscious & Spirituality'
+];
+
+const SYNERGY_OBSERVATIONS = [
+  'Each cycle deepens the mirror. The shadows you face today are the light you become tomorrow.',
+  'The alchemical process is not linear — it spirals. With each cycle, you return to familiar ground at a higher elevation.',
+  'What resists persists. What is witnessed transforms. Your journal is the vessel of this witnessing.',
+  'The seven Hermetic laws are not abstract principles — they are the operating system of your inner world.',
+  'Nigredo blackens to make fertile. Albedo whitens to make clear. Citrinitas dawns with insight. Rubedo reddens into embodiment.',
+  'Every session is a threshold. The 3-6-9 signature is the key that unlocks the next door.',
+  'Nine sessions, one cycle. The decimal system mirrors the nine months of gestation — you are birthing yourself.',
+  'The Moon moves through all twelve signs in 27 days. In that time, you journey through every house of your inner chart.'
+];
+
+const MOON_PHASES = [
+  'New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous',
+  'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'
+];
+
+// --- Prompt Templates (20+) ---
+const PROMPT_TEMPLATES = [
+  "Your {moon_sigil} {moon_sign} Moon passes through House {house_num} — the house of {house_theme}. Under the {phase} phase, the law of {law} is active. What is the shadow you've been shielding from your own sight in this area?",
+  "The {law} principle speaks through your {moon_sign} Moon today in House {house_num}. {phase} phase asks: Which part of your relationship to {house_theme} are you ready to let dissolve?",
+  "In the {phase} phase, with the Moon in {moon_sign} (House {house_num}), the Hermetic law of {law} is your guide. Write about a {house_theme} pattern you've outgrown but still carry.",
+  "House {house_num} ({house_theme}) receives the {moon_sign} Moon. {law} is the law in session. The {phase} phase deepens the inquiry: What fear lives in this house that you've never named aloud?",
+  "Your {moon_sign} Moon transits House {house_num}, invoking {law}. During {phase}, shadow work is about excavation. What buried truth about {house_theme} wants to surface?",
+  "The {phase} phase illuminates the {law} energy of your {moon_sign} Moon in House {house_num}. What story about {house_theme} do you tell yourself that may no longer be true?",
+  "Today the {moon_sign} Moon occupies House {house_num} ({house_theme}). The principle of {law} governs. Under {phase}, the question arises: What are you protecting that actually imprisons you?",
+  "House {house_num} — the realm of {house_theme} — is where the {moon_sign} Moon casts its shadow today. With the {law} law active and {phase} descending: Where are you performing instead of being?",
+  "In the crucible of {phase}, your {moon_sign} Moon in House {house_num} activates the law of {law}. The work: examine a recurring {house_theme} conflict and trace it to its root.",
+  "The {moon_sign} Moon crosses House {house_num}, vibrating with {law}. {phase} phase whispers: What are you not saying about {house_theme} that needs to be spoken?",
+  "Under {phase}, the {law} law shapes how your {moon_sign} Moon expresses through House {house_num}. Journal about a {house_theme} wound that has quietly shaped your choices.",
+  "Your {moon_sign} Moon in House {house_num} calls the law of {law} into action. The {phase} phase strips away pretense. What about {house_theme} have you been pretending is fine?",
+  "The {phase} phase and the {moon_sign} Moon in House {house_num} create an alchemical container governed by {law}. What needs to be alchemized in your {house_theme} today?",
+  "House {house_num} ({house_theme}) is activated by the {moon_sign} Moon. The Hermetic law of {law} is the lens. {phase} phase asks: What inheritance (karmic or familial) around {house_theme} are you ready to transform?",
+  "With the Moon in {moon_sign} at House {house_num}, {law} is the presiding principle. In this {phase} phase, examine the gap between what you want for {house_theme} and what you allow.",
+  "The {moon_sign} Moon's transit through House {house_num} brings the law of {law} into focus. {phase} phase invites shadow integration. Where in {house_theme} do you abandon yourself?",
+  "Today's {phase} phase intensifies the {moon_sign} Moon's passage through House {house_num}. The law of {law} is your compass. What resentment about {house_theme} are you ready to release?",
+  "Your {moon_sign} Moon in House {house_num} meets the {phase} phase under the law of {law}. Journal: What is the lie you've told yourself about {house_theme} that keeps you small?",
+  "The alchemical stage is {phase}, the Moon is in {moon_sign}, House {house_num} is activated, and {law} governs. What in {house_theme} is calling for your attention — not your fixing?",
+  "House {house_num} ({house_theme}) is where your {moon_sign} Moon does its shadow work today. {phase} + {law} = the formula. What pattern in {house_theme} repeats because you haven't witnessed it fully?",
+  "The {moon_sign} Moon in House {house_num} invokes {law}. Under {phase}, the shadow speaks in symbols. What dream, image, or memory about {house_theme} arose recently? What is it saying?",
+  "Today: {moon_sign} Moon · House {house_num} ({house_theme}) · {law} · {phase}. The intersection creates a specific alchemical signature. What one small truth about {house_theme} are you ready to admit to yourself?",
+  "The {phase} phase amplifies the {law} resonance of your {moon_sign} Moon in House {house_num}. What is the gift hidden inside your most defended {house_theme} pattern?",
+  "Your {moon_sign} Moon transits House {house_num}, the domain of {house_theme}. With the law of {law} active and {phase} as the atmosphere: What would you do differently in {house_theme} if fear were not a factor?",
+  "The {phase} phase casts a specific light on the {moon_sign} Moon's journey through House {house_num}. The governing law is {law}. Where in {house_theme} are you betraying your own values to keep the peace?"
+];
+
+// --- Storage ---
+function loadData(key, def) { try { const d = localStorage.getItem(key); return d ? JSON.parse(d) : def; } catch(e) { return def; } }
+function saveData(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {} }
+
+// --- Moon Calculations ---
+function getMoonSignAndDegree(date) {
+  // Reference: Jan 1, 2020, Moon at 15° Pisces = 345° ecliptic longitude
+  const ref = new Date(2020, 0, 1, 0, 0, 0);
+  const ms = date.getTime() - ref.getTime();
+  const days = ms / 86400000;
+  // Moon moves ~13.2° per day through the zodiac (sidereal month approximation)
+  const degreesTraveled = days * 13.2;
+  const totalDeg = ((345 + degreesTraveled) % 360 + 360) % 360;
+  const signIndex = Math.floor(totalDeg / 30);
+  const degree = totalDeg % 30;
+  return { sign: ZODIAC[signIndex], degree: degree, signIndex: signIndex };
+}
+
+function getMoonPhase(date) {
+  // Known new moon: January 6, 2000 18:14 UTC
+  const ref = new Date(Date.UTC(2000, 0, 6, 18, 14, 0));
+  const ms = date.getTime() - ref.getTime();
+  const days = ms / 86400000;
+  const lunarMonth = 29.530587;
+  const age = ((days % lunarMonth) + lunarMonth) % lunarMonth;
+  const fraction = age / lunarMonth;
+  if (fraction < 0.025 || fraction >= 0.975) return 'New Moon';
+  if (fraction < 0.24) return 'Waxing Crescent';
+  if (fraction < 0.26) return 'First Quarter';
+  if (fraction < 0.49) return 'Waxing Gibbous';
+  if (fraction < 0.52) return 'Full Moon';
+  if (fraction < 0.74) return 'Waning Gibbous';
+  if (fraction < 0.76) return 'Last Quarter';
+  return 'Waning Crescent';
+}
+
+function getAlchemicalPhase(date) {
+  const phase = getMoonPhase(date);
+  return PHASE_MAP[phase] || 'Nigredo';
+}
+
+function getHouseNumber(risingSign, moonSign) {
+  const risingIdx = ZODIAC.indexOf(risingSign);
+  const moonIdx = ZODIAC.indexOf(moonSign);
+  if (risingIdx === -1 || moonIdx === -1) return 1;
+  return ((moonIdx - risingIdx + 12) % 12) + 1;
+}
+
+function reduceToSingleDigit(n) {
+  while (n > 9) { n = String(n).split('').reduce((a,b) => a + parseInt(b), 0); }
+  return n;
+}
+
+function getSignature(houseNum, lawName, phaseName) {
+  const d1 = reduceToSingleDigit(houseNum);
+  const d2 = LAW_INDEX[lawName] || 1;
+  const d3 = PHASE_INDEX[phaseName] || 1;
+  return `${d1}${d2}${d3}`;
+}
+
+function getHermeticLaw(moonSign) {
+  return HERMETIC_LAWS[moonSign] || 'Vibration';
+}
+
+// --- Prompt Generation ---
+function generatePrompt(moonSign, houseNum, lawName, phaseName) {
+  const moonSigil = SIGIL[moonSign] || '';
+  const houseTheme = HOUSE_THEMES[houseNum - 1] || 'Life';
+  const pool = PROMPT_TEMPLATES;
+  // Use today's date as seed for consistent daily prompt
+  const today = new Date();
+  const dateStr = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+  let seed = 0;
+  for (let i = 0; i < dateStr.length; i++) { seed = ((seed << 5) - seed) + dateStr.charCodeAt(i); seed = seed & seed; }
+  const idx = Math.abs(seed) % pool.length;
+  
+  let prompt = pool[idx];
+  prompt = prompt.replace(/\{moon_sigil\}/g, moonSigil);
+  prompt = prompt.replace(/\{moon_sign\}/g, moonSign);
+  prompt = prompt.replace(/\{house_num\}/g, houseNum);
+  prompt = prompt.replace(/\{house_theme\}/g, houseTheme);
+  prompt = prompt.replace(/\{law\}/g, lawName);
+  prompt = prompt.replace(/\{phase\}/g, phaseName);
+  return prompt;
+}
+
+// --- Today's Data ---
+function computeToday() {
+  const chart = loadData('alchemize_chart', null);
+  if (!chart) return null;
+  const now = new Date();
+  const moon = getMoonSignAndDegree(now);
+  const phase = getMoonPhase(now);
+  const alchemicalPhase = getAlchemicalPhase(now);
+  const house = getHouseNumber(chart.rising, moon.sign);
+  const law = getHermeticLaw(moon.sign);
+  const sig = getSignature(house, law, alchemicalPhase);
+  const prompt = generatePrompt(moon.sign, house, law, alchemicalPhase);
+  
+  return {
+    moonSign: moon.sign,
+    moonDegree: moon.degree,
+    moonPhase: phase,
+    alchemicalPhase: alchemicalPhase,
+    house: house,
+    law: law,
+    signature: sig,
+    prompt: prompt,
+    date: now.toISOString().split('T')[0]
+  };
+}
+
+// --- UI Rendering ---
+function renderPhaseHeader(today) {
+  if (!today) return;
+  const phase = today.alchemicalPhase;
+  document.getElementById('phase-symbol-header').textContent = PHASE_SYMBOL[phase] || '⚫';
+  document.getElementById('phase-name-header').textContent = phase;
+  document.getElementById('moon-info-header').textContent = `Moon in ${today.moonSign} ${SIGIL[today.moonSign] || ''} · ${today.moonPhase}`;
+}
+
+function applyTheme(today) {
+  if (!today) return;
+  const phase = today.alchemicalPhase;
+  const theme = PHASE_THEME[phase] || PHASE_THEME['Nigredo'];
+  document.body.className = theme.body;
+  // Update CSS variables for dynamic elements
+  document.documentElement.style.setProperty('--bg-base', theme.bg);
+  document.documentElement.style.setProperty('--bg-surface', theme.surface);
+  document.documentElement.style.setProperty('--accent', theme.accent);
+}
+
+function renderDailyView(today) {
+  if (!today) {
+    document.getElementById('journal-prompt').textContent = 'Please set up your birth chart first.';
+    document.getElementById('sig-digits').textContent = '—';
+    document.getElementById('journal-meta').innerHTML = '';
+    return;
+  }
+  document.getElementById('journal-prompt').textContent = today.prompt;
+  document.getElementById('sig-digits').textContent = today.signature;
+  document.getElementById('prompt-moon-sign').textContent = `🌙 ${today.moonSign} ${SIGIL[today.moonSign] || ''}`;
+  document.getElementById('prompt-house').textContent = `🏠 House ${today.house}`;
+  document.getElementById('prompt-law').textContent = `⚖️ ${today.law}`;
+}
+
+function renderSessionCounter() {
+  const sessions = loadData('alchemize_sessions', []);
+  const cycle = loadData('alchemize_cycle', 1);
+  const count = sessions.length;
+  const progress = ((count % 9) / 9) * 100;
+  document.getElementById('session-counter').textContent = `${count} sessions completed`;
+  document.getElementById('cycle-label').textContent = `Cycle ${cycle}`;
+  document.getElementById('cycle-bar').style.width = `${progress}%`;
+}
+
+function renderEntriesList() {
+  const container = document.getElementById('entries-list');
+  const sessions = loadData('alchemize_sessions', []);
+  if (sessions.length === 0) {
+    container.innerHTML = '<div class="card"><div class="empty-state">No journal entries yet.<br>Start your practice today.</div></div>';
+    return;
+  }
+  let html = '';
+  // Show most recent first
+  const reversed = [...sessions].reverse();
+  for (const entry of reversed) {
+    const preview = entry.writing ? entry.writing.substring(0, 80) + (entry.writing.length > 80 ? '...' : '') : '(empty)';
+    html += `
+      <div class="entry-item" data-idx="${sessions.indexOf(entry)}">
+        <div class="entry-date">${entry.date || 'Unknown'} · ${entry.phase || ''}</div>
+        <div class="entry-preview">${preview}</div>
+        <span class="sig-badge entry-sig"><span>3·6·9</span><span class="sig-digits">${entry.signature || '—'}</span></span>
+      </div>
+    `;
+  }
+  container.innerHTML = html;
+  
+  // Click handler
+  container.querySelectorAll('.entry-item').forEach(el => {
+    el.addEventListener('click', function() {
+      const idx = parseInt(this.dataset.idx);
+      showEntryModal(idx);
+    });
+  });
+}
+
+function renderSynthesis() {
+  const container = document.getElementById('synthesis-content');
+  const sessions = loadData('alchemize_sessions', []);
+  const cycle = loadData('alchemize_cycle', 1);
+  
+  if (sessions.length < 9) {
+    const remaining = 9 - (sessions.length % 9);
+    container.innerHTML = `
+      <div class="card text-center">
+        <p style="font-size:40px; margin-bottom:12px;">🌀</p>
+        <p style="font-size:15px;">You need ${remaining} more session${remaining > 1 ? 's' : ''} to complete Cycle ${cycle}.</p>
+        <p class="text-sm text-dim mt-8">Every 9 sessions unlocks a full synthesis.</p>
+      </div>
+    `;
+    // Still show stats for current cycle
+    const cycleSessions = sessions.slice(-9);
+    if (cycleSessions.length > 0) {
+      container.innerHTML += renderSynthStats(cycleSessions, cycle);
+    }
+    return;
+  }
+  
+  // Show full synthesis for each complete cycle
+  const cycles = Math.floor(sessions.length / 9);
+  let html = '';
+  for (let c = 1; c <= cycles; c++) {
+    const start = (c - 1) * 9;
+    const cycleSessions = sessions.slice(start, start + 9);
+    html += renderSynthStats(cycleSessions, c);
+  }
+  // Also show current partial cycle
+  const remaining = sessions.length % 9;
+  if (remaining > 0) {
+    html += renderSynthStats(sessions.slice(-remaining), cycles + 1, true);
+  }
+  container.innerHTML = html;
+}
+
+function renderSynthStats(sessions, cycleNum, partial) {
+  if (sessions.length === 0) return '';
+  
+  const totalSessions = sessions.length;
+  // Law frequency
+  const lawCounts = {};
+  const phaseCounts = {};
+  for (const s of sessions) {
+    if (s.law) lawCounts[s.law] = (lawCounts[s.law] || 0) + 1;
+    if (s.phase) phaseCounts[s.phase] = (phaseCounts[s.phase] || 0) + 1;
+  }
+  
+  const obsIndex = (cycleNum - 1) % SYNERGY_OBSERVATIONS.length;
+  const observation = SYNERGY_OBSERVATIONS[obsIndex];
+  
+  const lawNames = Object.keys(HERMETIC_LAWS).map(k => HERMETIC_LAWS[k]);
+  const uniqueLaws = [...new Set(lawNames)];
+  
+  let html = `
+    <div class="card fade-in">
+      <h3 style="font-size:18px; margin-bottom:4px;">${partial ? 'Current Cycle' : 'Cycle ' + cycleNum}</h3>
+      <p class="text-sm text-dim" style="margin-bottom:16px;">${totalSessions} session${totalSessions > 1 ? 's' : ''} in this cycle</p>
+      
+      <div class="synth-grid">
+        <div class="synth-stat">
+          <div class="number">${totalSessions}</div>
+          <div class="label">Sessions</div>
+        </div>
+        <div class="synth-stat">
+          <div class="number">${Object.keys(phaseCounts).length}</div>
+          <div class="label">Phases Seen</div>
+        </div>
+      </div>
+      
+      <div style="margin-top:16px;">
+        <p class="text-xs" style="margin-bottom:8px;">Hermetic Laws Encountered</p>
+  `;
+  
+  for (const law of uniqueLaws) {
+    const count = lawCounts[law] || 0;
+    const pct = totalSessions > 0 ? (count / totalSessions) * 100 : 0;
+    html += `
+      <div class="synth-law-bar">
+        <span class="law-name">${law}</span>
+        <div style="flex:1; height:6px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden;">
+          <div class="bar-fill" style="width:${pct}%"></div>
+        </div>
+        <span class="law-count">${count}</span>
+      </div>
+    `;
+  }
+  
+  html += `
+      </div>
+      
+      <div style="margin-top:16px;">
+        <p class="text-xs" style="margin-bottom:8px;">Phase Distribution</p>
+        <div class="flex flex-wrap">
+  `;
+  
+  for (const [phase, count] of Object.entries(phaseCounts)) {
+    html += `<span class="synth-phase-dot">${PHASE_SYMBOL[phase] || '•'} ${phase}: ${count}</span>`;
+  }
+  
+  html += `
+        </div>
+      </div>
+      
+      <div class="synth-observation mt-16">
+        ${observation}
+      </div>
+    </div>
+  `;
+  
+  return html;
+}
+
+function renderOffer() {
+  const spots = loadData('alchemize_spots', 50);
+  document.getElementById('spots-display').innerHTML = `<span class="spots-num">${spots}</span> spots remaining`;
+  document.getElementById('btn-claim').disabled = spots <= 0;
+}
+
+function showEntryModal(idx) {
+  const sessions = loadData('alchemize_sessions', []);
+  const entry = sessions[idx];
+  if (!entry) return;
+  
+  document.getElementById('modal-body').innerHTML = `
+    <p class="text-xs text-dim">${entry.date || 'Unknown date'} · ${entry.phase || ''}</p>
+    <span class="sig-badge mt-8"><span>3·6·9</span><span class="sig-digits">${entry.signature || '—'}</span></span>
+    <div style="margin-top:16px; padding:16px; background:rgba(255,255,255,0.04); border-radius:12px; border-left:3px solid var(--gold);">
+      <p style="font-family:'Instrument Serif',serif; font-style:italic; line-height:1.6; font-size:15px;">
+        ${entry.prompt || 'No prompt recorded'}
+      </p>
+    </div>
+    ${entry.writing ? `
+      <div style="margin-top:16px;">
+        <p class="text-xs" style="margin-bottom:8px;">Your Writing</p>
+        <p style="line-height:1.7; font-size:14px; white-space:pre-wrap;">${entry.writing}</p>
+      </div>
+    ` : '<p class="text-sm text-dim mt-16">No writing recorded for this entry.</p>'}
+  `;
+  document.getElementById('modal').classList.add('open');
+}
+
+// --- Navigation ---
+function showView(viewName) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + viewName).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.nav-btn[data-view="${viewName}"]`).classList.add('active');
+  
+  // Refresh content when switching to certain views
+  if (viewName === 'daily') {
+    refreshDaily();
+  } else if (viewName === 'history') {
+    renderEntriesList();
+  } else if (viewName === 'synthesis') {
+    renderSynthesis();
+  } else if (viewName === 'offer') {
+    renderOffer();
+  }
+}
+
+function refreshDaily() {
+  const today = computeToday();
+  if (today) {
+    renderPhaseHeader(today);
+    applyTheme(today);
+    renderDailyView(today);
+  } else {
+    // No chart saved - show setup
+    showView('setup');
+    return;
+  }
+  renderSessionCounter();
+}
+
+// --- Initialization ---
+function init() {
+  const chart = loadData('alchemize_chart', null);
+  
+  // Setup view event
+  document.getElementById('btn-save-chart').addEventListener('click', function() {
+    const sun = document.getElementById('input-sun').value;
+    const moon = document.getElementById('input-moon').value;
+    const rising = document.getElementById('input-rising').value;
+    if (!sun || !moon || !rising) {
+      alert('Please select all three signs to begin.');
+      return;
+    }
+    saveData('alchemize_chart', { sun, moon, rising });
+    // Initialize spots if not set
+    if (loadData('alchemize_spots', null) === null) {
+      saveData('alchemize_spots', 50);
+    }
+    if (loadData('alchemize_cycle', null) === null) {
+      saveData('alchemize_cycle', 1);
+    }
+    refreshDaily();
+    showView('daily');
+  });
+  
+  // Nav events
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      showView(this.dataset.view);
+    });
+  });
+  
+  // Save journal
+  document.getElementById('btn-save-journal').addEventListener('click', function() {
+    const today = computeToday();
+    if (!today) return;
+    const text = document.getElementById('journal-text').value;
+    if (!text.trim()) {
+      alert('Write something before saving.');
+      return;
+    }
+    const sessions = loadData('alchemize_sessions', []);
+    sessions.push({
+      date: today.date,
+      prompt: today.prompt,
+      writing: text,
+      signature: today.signature,
+      phase: today.alchemicalPhase,
+      law: today.law,
+      moonSign: today.moonSign,
+      house: today.house
+    });
+    saveData('alchemize_sessions', sessions);
+    
+    // Check cycle completion
+    const count = sessions.length;
+    const cycle = loadData('alchemize_cycle', 1);
+    if (count % 9 === 0) {
+      saveData('alchemize_cycle', cycle + 1);
+      alert(`🌀 Cycle ${cycle} complete! Your synthesis is ready in the Cycle view.`);
+    }
+    
+    document.getElementById('journal-text').value = '';
+    renderSessionCounter();
+    renderEntriesList();
+    alert('✓ Entry saved.');
+  });
+  
+  // Claim button
+  document.getElementById('btn-claim').addEventListener('click', function() {
+    let spots = loadData('alchemize_spots', 50);
+    if (spots <= 0) {
+      alert('All founding spots have been claimed.');
+      return;
+    }
+    spots--;
+    saveData('alchemize_spots', spots);
+    renderOffer();
+    alert(`⚗️ You've claimed a founding spot! ${spots} remaining.`);
+  });
+  
+  // Modal close
+  document.getElementById('modal-close').addEventListener('click', function() {
+    document.getElementById('modal').classList.remove('open');
+  });
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+  
+  // Keyboard shortcut
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') document.getElementById('modal').classList.remove('open');
+  });
+  
+  // Init spots
+  if (loadData('alchemize_spots', null) === null) {
+    saveData('alchemize_spots', 50);
+  }
+  if (loadData('alchemize_cycle', null) === null) {
+    saveData('alchemize_cycle', 1);
+  }
+  
+  // If chart exists, go to daily
+  if (chart) {
+    // Pre-fill setup in case they want to edit
+    document.getElementById('input-sun').value = chart.sun || '';
+    document.getElementById('input-moon').value = chart.moon || '';
+    document.getElementById('input-rising').value = chart.rising || '';
+    refreshDaily();
+    showView('daily');
+  } else {
+    showView('setup');
+  }
+}
+
+// --- Start ---
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
