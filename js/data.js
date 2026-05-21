@@ -1,5 +1,75 @@
 // --- Constants ---
 const ZODIAC = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+
+// --- 6 Practices ---
+const PRACTICES = [
+  {
+    id: 'mirror',
+    name: 'The Mirror',
+    symbol: '⊞',
+    element: 'Water',
+    color: '#2D6B8A',
+    shortDesc: 'Dialogue with your shadow',
+    guidance: 'The shadow never speaks directly — it whispers through projection. Read today\'s prompt, then write a dialogue. You ask. It answers. Do not edit. Do not censor.',
+    uiType: 'split-journal'
+  },
+  {
+    id: 'map',
+    name: 'The Map',
+    symbol: '⌗',
+    element: 'Earth',
+    color: '#6B8A2D',
+    shortDesc: 'As above, so below',
+    guidance: 'Every inner pattern has an outer mirror. Look at what you\'ve just read. Now look at your life. Where is this pattern playing out in your relationships, your work, your body?',
+    uiType: 'dual-column'
+  },
+  {
+    id: 'body',
+    name: 'The Body',
+    symbol: '⊕',
+    element: 'Earth',
+    color: '#8A5A2D',
+    shortDesc: 'Somatic shadow scan',
+    guidance: 'The shadow is stored in tissue before it reaches thought. Close your eyes. Scan from crown to root. Where does today\'s theme resonate physically? A weight in the chest? A knot in the throat?',
+    uiType: 'body-scan'
+  },
+  {
+    id: 'sigil',
+    name: 'The Sigil',
+    symbol: '✦',
+    element: 'Fire',
+    color: '#C9A84C',
+    shortDesc: '3·6·9 distillation',
+    guidance: 'The truth is simpler than you think. Distill today\'s insight into three layers: The insight in 3 words. The reflection in 6. The release in 9. This is your charged symbol.',
+    uiType: 'sigil-369'
+  },
+  {
+    id: 'archetype',
+    name: 'The Archetype',
+    symbol: '◇',
+    element: 'Air',
+    color: '#8A6DB5',
+    shortDesc: 'Which face wears you?',
+    guidance: 'Jung said archetypes are the ancient patterns of the collective unconscious. Today, one is speaking through you. Is it the Persona (the mask)? The Shadow (what you hide)? The Anima/Animus (the inner other)? Or the Self (the whole)?',
+    uiType: 'archetype-select'
+  },
+  {
+    id: 'thread',
+    name: 'The Thread',
+    symbol: '∞',
+    element: 'Air',
+    color: '#B56D8A',
+    shortDesc: 'Track the synchronicities',
+    guidance: 'The universe speaks in symbols. What strange coincidence crossed your path today? A number pattern? A chance encounter? A dream fragment that lingers? Record it — threads weave into meaning over the cycle.',
+    uiType: 'open-field'
+  }
+];
+
+function getTodaysPractice(sessionCount) {
+  const rotation = [0, 1, 2, 3, 4, 5, 0, 1, 3]; // 9 slots: Mirror, Map, Body, Sigil, Archetype, Thread, Mirror, Map, Sigil
+  const idx = rotation[sessionCount % 9];
+  return PRACTICES[idx];
+}
 const SIGIL = { 'Aries':'♈','Taurus':'♉','Gemini':'♊','Cancer':'♋','Leo':'♌','Virgo':'♍','Libra':'♎','Scorpio':'♏','Sagittarius':'♐','Capricorn':'♑','Aquarius':'♒','Pisces':'♓' };
 
 const HERMETIC_LAWS = {

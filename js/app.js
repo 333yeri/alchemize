@@ -23,6 +23,13 @@ function refreshDaily() {
     renderPhaseHeader(today);
     applyTheme(today);
     renderDailyView(today);
+    
+    // Render today's practice
+    const sessions = loadData('alchemize_sessions', []);
+    const practice = getTodaysPractice(sessions.length);
+    // First session ever? Show guidance expanded
+    const isFirstSession = sessions.length === 0;
+    renderPracticeUI(practice, isFirstSession);
   } else {
     // No chart saved - show setup
     showView('setup');
@@ -67,16 +74,28 @@ function init() {
   document.getElementById('btn-save-journal').addEventListener('click', function() {
     const today = computeToday();
     if (!today) return;
-    const text = document.getElementById('journal-text').value;
+    
+    const sessions = loadData('alchemize_sessions', []);
+    const practice = getTodaysPractice(sessions.length);
+    
+    // Get practice-specific text
+    const practiceText = getPracticeText(practice);
+    // Also grab any fallback journal text
+    const journalText = document.getElementById('journal-text')?.value || '';
+    const text = practiceText || journalText;
+    
     if (!text.trim()) {
       alert('Write something before saving.');
       return;
     }
-    const sessions = loadData('alchemize_sessions', []);
+    
     sessions.push({
       date: today.date,
       prompt: today.prompt,
       writing: text,
+      practice: practice.id,
+      practiceName: practice.name,
+      practiceSymbol: practice.symbol,
       signature: today.signature,
       phase: today.alchemicalPhase,
       law: today.law,

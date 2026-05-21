@@ -64,7 +64,305 @@
 }
 .card:hover {
   border-color: var(--border-glow);
-}/* Birth chart input */
+}
+
+/* --- Practice UI --- */
+.practice-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 4px;
+}
+.practice-symbol {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+}
+.practice-name {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px; font-weight: 600;
+  color: var(--text-primary);
+}
+.practice-element-tag {
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+/* Split journal (The Mirror) */
+.split-journal {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 10px;
+}
+.split-journal-col {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.split-journal-label {
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 6px;
+  text-align: center; font-weight: 500;
+}
+.split-journal-label.me { background: rgba(45,107,138,0.15); color: #4A9FD4; border: 1px solid rgba(45,107,138,0.3); }
+.split-journal-label.shadow { background: rgba(107,45,80,0.15); color: #D44A8A; border: 1px solid rgba(107,45,80,0.3); }
+.split-journal textarea {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text-primary);
+  font-size: 15px; line-height: 1.6;
+  outline: none; resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.3s;
+}
+.split-journal textarea:focus { border-color: var(--filigree); }
+
+/* Dual column (The Map) */
+.dual-column { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.dual-column-col { display: flex; flex-direction: column; gap: 6px; }
+.dual-column-label {
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 6px;
+  text-align: center; font-weight: 500;
+}
+.dual-column-label.inner { background: rgba(107,138,45,0.15); color: #8AB54A; border: 1px solid rgba(107,138,45,0.3); }
+.dual-column-label.outer { background: rgba(138,90,45,0.15); color: #B58A4A; border: 1px solid rgba(138,90,45,0.3); }
+.dual-column textarea {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text-primary);
+  font-size: 15px; line-height: 1.6;
+  outline: none; resize: vertical;
+  min-height: 120px;
+  transition: border-color 0.3s;
+}
+.dual-column textarea:focus { border-color: var(--filigree); }
+
+/* Body scan (The Body) */
+.body-scan { margin-top: 10px; }
+.body-scan-layout {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.body-svg-container {
+  flex-shrink: 0; width: 140px;
+}
+.body-svg-container svg { width: 100%; height: auto; }
+.body-region {
+  fill: rgba(138,90,45,0.1);
+  stroke: rgba(138,90,45,0.4);
+  stroke-width: 1;
+  transition: fill 0.3s, stroke 0.3s;
+  cursor: pointer;
+}
+.body-region:hover { fill: rgba(138,90,45,0.25); }
+.body-region.selected { fill: rgba(138,90,45,0.35); stroke: #C9A84C; stroke-width: 1.5; }
+.body-scan-sidebar { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.body-region-name {
+  font-size: 12px; letter-spacing: 1px;
+  color: var(--text-dim); font-weight: 500;
+  padding: 4px 8px; border-radius: 6px;
+  background: rgba(138,90,45,0.1);
+  text-align: center;
+}
+.body-scan textarea {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text-primary);
+  font-size: 15px; line-height: 1.6;
+  outline: none; resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+.body-scan textarea:focus { border-color: var(--filigree); }
+
+/* Sigil 3-6-9 (The Sigil) */
+.sigil-369 { margin-top: 10px; }
+.sigil-steps { display: flex; flex-direction: column; gap: 12px; }
+.sigil-step {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(201,168,76,0.04);
+}
+.sigil-step-header {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.sigil-step-label {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 16px; font-weight: 600;
+  color: var(--filigree);
+}
+.sigil-step-hint {
+  font-size: 11px; color: var(--text-dim); line-height: 1.4;
+}
+.sigil-step input {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text-primary);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.sigil-step input:focus { border-color: var(--filigree); }
+.sigil-word-count {
+  font-size: 11px; color: var(--text-dim);
+  text-align: right; margin-top: 2px;
+}
+
+/* Archetype select (The Archetype) */
+.archetype-select { margin-top: 10px; }
+.archetype-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  margin-bottom: 10px;
+}
+.archetype-card {
+  padding: 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(138,109,181,0.04);
+}
+.archetype-card:hover { border-color: rgba(138,109,181,0.5); }
+.archetype-card.selected {
+  border-color: #8A6DB5;
+  background: rgba(138,109,181,0.15);
+}
+.archetype-card-symbol {
+  font-size: 22px; margin-bottom: 4px;
+}
+.archetype-card-name {
+  font-size: 13px; font-weight: 500;
+}
+.archetype-card-desc {
+  font-size: 11px; color: var(--text-dim);
+  margin-top: 2px; line-height: 1.4;
+}
+.archetype textarea {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text-primary);
+  font-size: 15px; line-height: 1.6;
+  outline: none; resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+.archetype textarea:focus { border-color: var(--filigree); }
+
+/* Open field (The Thread) */
+.open-field { margin-top: 10px; }
+.thread-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 10px;
+}
+.thread-tag {
+  font-size: 11px; letter-spacing: 0.5px;
+  padding: 4px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-dim);
+  background: transparent;
+}
+.thread-tag:hover { border-color: rgba(181,109,138,0.5); color: var(--text-primary); }
+.thread-tag.active {
+  background: rgba(181,109,138,0.15);
+  border-color: #B56D8A;
+  color: var(--text-primary);
+}
+.open-field textarea {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text-primary);
+  font-size: 15px; line-height: 1.6;
+  outline: none; resize: vertical;
+  min-height: 120px;
+  width: 100%;
+  transition: border-color 0.3s;
+}
+.open-field textarea:focus { border-color: var(--filigree); }
+
+/* Guidance section (collapsible) */
+.practice-guidance {
+  margin-bottom: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.03);
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.practice-guidance-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-dim);
+  user-select: none;
+  transition: color 0.2s;
+}
+.practice-guidance-header:hover { color: var(--text-primary); }
+.practice-guidance-header .guidance-toggle {
+  margin-left: auto;
+  font-size: 10px;
+  transition: transform 0.3s;
+}
+.practice-guidance-header .guidance-toggle.open {
+  transform: rotate(180deg);
+}
+.practice-guidance-body {
+  padding: 0 14px 14px;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-dim);
+  display: none;
+}
+.practice-guidance-body.open {
+  display: block;
+}
+
+/* Mobile responsive: stack columns on small screens */
+@media (max-width: 480px) {
+  .split-journal { grid-template-columns: 1fr; }
+  .dual-column { grid-template-columns: 1fr; }
+  .body-scan-layout { flex-direction: column; align-items: center; }
+  .body-svg-container { width: 100px; }
+  .archetype-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Practice divider */
+.practice-divider {
+  border: none; border-top: 1px solid var(--border-subtle);
+  margin: 12px 0;
+}
+
+/* Birth chart input */
 .chart-form { display: flex; flex-direction: column; gap: 16px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group label {
