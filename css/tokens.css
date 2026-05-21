@@ -1,0 +1,19 @@
+/* Black Mirror — pure void + sharp filigree gold */
+  --void: #000000;
+  --void-surface: #080808;
+  --void-card: rgba(8, 8, 8, 0.9);
+  --void-lift: #0D0D0D;
+  --filigree: #D4A54A;
+  --filigree-bright: #EDC26A;
+  --filigree-glow: rgba(212, 165, 74, 0.15);
+  --filigree-edge: rgba(212, 165, 74, 0.08);
+  --text-primary: #FFFFFF;
+  --text-secondary: #A09A90;
+  --text-dim: #6B6660;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(212, 165, 74, 0.12);
+  --accent: #2D1B3D;
+  --accent-glow: rgba(45, 27, 61, 0.4);
+  --transition-speed: 1.2s;
+  --motion-quick: 0.3s;
+}

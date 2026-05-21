@@ -1,0 +1,146 @@
+/* Phase theme overrides - applied via JS */
+body.theme-nigredo {
+  --accent: #2D1B3D; --accent-glow: rgba(45,27,61,0.4);
+  --phase-glow: rgba(45,27,61,0.15);
+}
+body.theme-albedo {
+  --accent: #8FA4B8; --accent-glow: rgba(143,164,184,0.3);
+  --phase-glow: rgba(143,164,184,0.12);
+}
+body.theme-citrinitas {
+  --accent: #D4A54A; --accent-glow: rgba(212,165,74,0.3);
+  --phase-glow: rgba(212,165,74,0.15);
+}
+body.theme-rubedo {
+  --accent: #8B3A3A; --accent-glow: rgba(139,58,58,0.3);
+  --phase-glow: rgba(139,58,58,0.15);
+}
+
+/* Chemical reaction phase transition */
+.phase-header, .card, #nav .nav-inner {
+  transition: background var(--transition-speed) ease,
+              border-color var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
+}
+#phase-symbol-header {
+  transition: transform var(--transition-speed) ease,
+              opacity var(--transition-speed) ease,
+              filter var(--transition-speed) ease;
+}
+#phase-symbol-header.transmuting {
+  animation: chemical-dissolve 1.2s ease forwards;
+}
+@keyframes chemical-dissolve {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+  40% { transform: scale(0.6) rotate(90deg); opacity: 0.3; filter: blur(4px); }
+  60% { transform: scale(1.2) rotate(-10deg); opacity: 0.7; filter: blur(0); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+}
+
+/* Setup screen - first visit */
+#view-setup .app-title {
+  font-size: 34px; text-align: center;
+  margin: 40px 0 4px;
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--filigree), var(--filigree-bright), var(--filigree));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#view-setup .app-subtitle {
+  text-align: center; font-size: 13px; color: var(--text-dim);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* History */
+#view-history .empty-state {
+  text-align: center; padding: 40px 20px;
+  color: var(--text-dim); font-size: 14px;
+}
+
+/* Loading / empty */
+.fade-in { animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Modal / detail view */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.92);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal-content {
+  background: var(--void-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 440px; width: 100%;
+  max-height: 80vh; overflow-y: auto;
+}
+.modal-content .modal-close {
+  float: right; cursor: pointer; font-size: 20px;
+  opacity: 0.5; transition: opacity 0.2s;
+  background: none; border: none; color: var(--text-primary);
+}
+.modal-content .modal-close:hover { opacity: 1; }
+
+/* Scrollable */
+.scroll-y { overflow-y: auto; }
+.hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Responsive */
+@media (max-width: 400px) {
+  #app { padding: 16px 12px 90px; }
+  .card { padding: 14px; }
+  .journal-prompt { font-size: 16px; }
+  .synth-grid { grid-template-columns: 1fr; }
+  #view-setup .app-title { font-size: 28px; }
+}
+
+/* Micro-motion utility */
+.motion-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+.motion-slide-up {
+  animation: slideUp 0.5s ease forwards;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.interactive-lift {
+  transition: transform var(--motion-quick) ease, box-shadow var(--motion-quick) ease;
+}
+.interactive-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.interactive-lift:active {
+  transform: translateY(0);
+}
+
+/* Utility */
+.mt-8 { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mt-20 { margin-top: 20px; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.text-center { text-align: center; }
+.text-dim { color: var(--text-dim); }
+.text-gold { color: var(--filigree); }
+.text-sm { font-size: 13px; }
+.text-xs { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.w-full { width: 100%; }
+.hidden { display: none !important; }
+
