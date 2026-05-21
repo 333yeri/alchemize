@@ -82,7 +82,7 @@ h1, h2, h3, h4 {
 
 /* Views */
 .view { display: none; flex-direction: column; gap: 20px; }
-.view.active { display: flex; }
+.view.active { display: flex; animation: fadeIn 0.4s ease; }
 
 /* Phase Header */
 .phase-header {
@@ -95,39 +95,67 @@ h1, h2, h3, h4 {
 .phase-header .phase-name { font-weight: 600; letter-spacing: 4px; }
 .phase-header .moon-info { font-size: 11px; letter-spacing: 1px; margin-top: 2px; opacity: 0.7; }
 
-/* Buttons */
+/* Buttons - subtle, responsive */
 .btn {
   font-family: 'Inter', sans-serif;
   border: 1px solid var(--border-subtle);
-  background: var(--void-card);
+  background: transparent;
   color: var(--text-primary);
-  padding: 14px 28px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
-.btn:hover { background: var(--accent); border-color: var(--accent); }
+.btn:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  transition: transform 0.08s ease;
+}
 .btn-primary {
-  background: var(--filigree); color: #000000; border-color: var(--filigree);
-  font-weight: 600;
+  background: rgba(255,255,255,0.06);
+  color: var(--text-primary);
+  border-color: rgba(255,255,255,0.12);
+  font-weight: 500;
   letter-spacing: 0.02em;
 }
-.btn-primary:hover { background: #d4b85a; border-color: #d4b85a; }
+.btn-primary:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.25);
+}
+.btn-primary:active {
+  background: rgba(255,255,255,0.14);
+}
+.btn-small {
+  padding: 8px 16px; font-size: 12px; border-radius: 6px;
+}
 .btn-small {
   padding: 8px 16px; font-size: 12px; border-radius: 8px;
 }
 .btn-claim {
-  background: linear-gradient(135deg, var(--filigree), #d4b85a);
-  color: #060A1A; border: none; font-weight: 700;
-  padding: 16px 32px; font-size: 16px; border-radius: 16px;
-  width: 100%; cursor: pointer; transition: all 0.3s;
+  background: transparent;
+  color: var(--text-primary); border: 1px solid var(--border-subtle); font-weight: 500;
+  padding: 14px 28px; font-size: 14px; border-radius: 8px;
+  width: 100%; cursor: pointer; transition: all 0.2s ease;
+  position: relative; overflow: hidden;
 }
-.btn-claim:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(201,168,76,0.3); }
-.btn-claim:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-claim:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-1px);
+}
+.btn-claim:active {
+  transform: translateY(0) scale(0.97);
+  transition: transform 0.08s ease;
+}
+.btn-claim:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
 /* Cards - void glass */
 .card {
@@ -533,43 +561,11 @@ body.theme-rubedo {
             <option value="Capricorn">Capricorn</option><option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
           </select>
         </div>
-        <button id="btn-save-chart" class="btn btn-primary w-full mt-8">⚗️ Begin Your Practice</button>
-      </div>
-    </div>
-  </div>
+        <button id="btn-save-chart" class="btn btn-primary w-full mt-8">⚗️ Begin Your Practice</butto
 
-  <!-- DAILY JOURNAL VIEW -->
-  <div id="view-daily" class="view">
-    <div class="phase-header">
-      <span class="phase-symbol" id="phase-symbol-header">⚫</span>
-      <span class="phase-name" id="phase-name-header">NIGREDO</span>
-      <div class="moon-info" id="moon-info-header">Moon in Aries · Waxing Crescent</div>
-    </div>
+... [OUTPUT TRUNCATED - 1704 chars omitted out of 51704 total] ...
 
-    <div class="card">
-      <div class="flex items-center justify-between">
-        <h3 style="font-size:16px;">Today's Session</h3>
-        <span class="sig-badge" id="sig-badge">
-          <span>3·6·9</span>
-          <span class="sig-digits" id="sig-digits">—</span>
-        </span>
-      </div>
-      <div style="border-top:1px solid var(--border-subtle); margin:12px 0;"></div>
-      <div class="journal-prompt" id="journal-prompt">
-        Loading your prompt...
-      </div>
-      <div class="journal-meta" id="journal-meta">
-        <span class="text-xs" id="prompt-moon-sign"></span>
-        <span class="text-xs" id="prompt-house"></span>
-        <span class="text-xs" id="prompt-law"></span>
-      </div>
-    </div>
-
-    <div class="card">
-      <label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-secondary-dim); font-weight:500;">
-        ✍️ Your Shadow Writing
-      </label>
-      <textarea id="journal-text" placeholder="Write your reflections here..." style="font-family:'Inter',sans-serif; background:rgba(255,255,255,0.04); border:1px solid var(--border-subtle); border-radius:10px; padding:12px 14px; color:var(--text-primary); font-size:15px; font-weight:400; outline:none; width:100%; resize:vertical; min-height:140px; line-height:1.6; margin-top:8px; transition:border-color 0.3s;"></textarea>
+rder-color 0.3s;"></textarea>
       <div class="flex items-center justify-between mt-12">
         <span id="session-counter" class="text-sm text-dim"></span>
         <button id="btn-save-journal" class="btn btn-primary btn-small">Save Entry</button>
@@ -1162,7 +1158,7 @@ function init() {
     if (!today) return;
     const text = document.getElementById('journal-text').value;
     if (!text.trim()) {
-      alert('Write something before saving.');
+      // Silent fail - no alert
       return;
     }
     const sessions = loadData('alchemize_sessions', []);
@@ -1190,13 +1186,23 @@ function init() {
     const cycle = loadData('alchemize_cycle', 1);
     if (count % 9 === 0) {
       saveData('alchemize_cycle', cycle + 1);
-      alert(`🌀 Cycle ${cycle} complete! Your synthesis is ready in the Cycle view.`);
+      // Cycle complete - synthesis ready
     }
     
     document.getElementById('journal-text').value = '';
     renderSessionCounter();
     renderEntriesList();
-    alert('✓ Entry saved.');
+    // Animate save button
+    const saveBtn = document.getElementById('btn-save-journal');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = '✦ Saved';
+    saveBtn.style.borderColor = 'rgba(255,255,255,0.2)';
+    saveBtn.style.background = 'rgba(255,255,255,0.08)';
+    setTimeout(() => {
+      saveBtn.textContent = originalText;
+      saveBtn.style.borderColor = '';
+      saveBtn.style.background = '';
+    }, 1500);
   });
   
   // Claim button
