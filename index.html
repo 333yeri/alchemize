@@ -82,7 +82,7 @@ h1, h2, h3, h4 {
 
 /* Views */
 .view { display: none; flex-direction: column; gap: 20px; }
-.view.active { display: flex; animation: fadeIn 0.4s ease; }
+.view.active { display: flex; }
 
 /* Phase Header */
 .phase-header {
@@ -95,7 +95,7 @@ h1, h2, h3, h4 {
 .phase-header .phase-name { font-weight: 600; letter-spacing: 4px; }
 .phase-header .moon-info { font-size: 11px; letter-spacing: 1px; margin-top: 2px; opacity: 0.7; }
 
-/* Buttons - mobile-visible */
+/* Buttons */
 .btn {
   font-family: 'Inter', sans-serif;
   border: 1px solid rgba(255,255,255,0.35);
@@ -112,7 +112,7 @@ h1, h2, h3, h4 {
   -webkit-tap-highlight-color: transparent;
 }
 .btn:active {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.14);
   border-color: rgba(255,255,255,0.5);
   transform: scale(0.97);
   transition: transform 0.06s ease;
@@ -120,31 +120,28 @@ h1, h2, h3, h4 {
 .btn-primary {
   background: rgba(255,255,255,0.10);
   color: var(--text-primary);
-  border-color: rgba(255,255,255,0.40);
+  border-color: rgba(255,255,255,0.35);
   font-weight: 500;
   letter-spacing: 0.02em;
 }
 .btn-primary:active {
-  background: rgba(255,255,255,0.18);
-  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.20);
+  border-color: rgba(255,255,255,0.5);
 }
 .btn-small {
-  padding: 10px 20px; font-size: 12px; border-radius: 6px;
-}
-.btn-small {
-  padding: 8px 16px; font-size: 12px; border-radius: 8px;
+  padding: 10px 20px; font-size: 13px; border-radius: 6px;
 }
 .btn-claim {
   background: rgba(255,255,255,0.08);
-  color: var(--text-primary); border: 1px solid rgba(255,255,255,0.40); font-weight: 500;
+  color: var(--text-primary); border: 1px solid rgba(255,255,255,0.35); font-weight: 500;
   padding: 16px 32px; font-size: 15px; border-radius: 8px;
   width: 100%; cursor: pointer; transition: all 0.15s ease;
   position: relative; overflow: hidden;
   -webkit-tap-highlight-color: transparent;
 }
 .btn-claim:active {
-  background: rgba(255,255,255,0.16);
-  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.5);
   transform: scale(0.97);
   transition: transform 0.06s ease;
 }
@@ -174,7 +171,7 @@ h1, h2, h3, h4 {
 .form-group select, .form-group input, .form-group textarea {
   font-family: 'Inter', sans-serif;
   background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid var(--border-subtle);
   border-radius: 10px;
   padding: 12px 14px;
   color: var(--text-primary);
@@ -322,10 +319,10 @@ h1, h2, h3, h4 {
 }
 .nav-inner {
   display: flex; gap: 4px;
-  background: rgba(15,15,15,0.95);
+  background: rgba(0,0,0,0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
   padding: 6px;
   max-width: 420px; width: 100%;
@@ -548,11 +545,57 @@ body.theme-rubedo {
           <label>⬆️ Rising Sign (Ascendant)</label>
           <select id="input-rising">
             <option value="">— Select —</option>
-            <option value="Aries">Aries</option><option value="Taurus">Taurus</option><option value="Gemi
+            <option value="Aries">Aries</option><option value="Taurus">Taurus</option><option value="Gemini">Gemini</option>
+            <option value="Cancer">Cancer</option><option value="Leo">Leo</option><option value="Virgo">Virgo</option>
+            <option value="Libra">Libra</option><option value="Scorpio">Scorpio</option><option value="Sagittarius">Sagittarius</option>
+            <option value="Capricorn">Capricorn</option><option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
+          </select>
+        </div>
+        <button id="btn-save-chart" class="btn btn-primary w-full mt-8">⚗️ Begin Your Practice</button>
+      </div>
+    </div>
+  </div>
 
-... [OUTPUT TRUNCATED - 93 chars omitted out of 50093 total] ...
+  <!-- DAILY JOURNAL VIEW -->
+  <div id="view-daily" class="view">
+    <div class="phase-header">
+      <span class="phase-symbol" id="phase-symbol-header">⚫</span>
+      <span class="phase-name" id="phase-name-header">NIGREDO</span>
+      <div class="moon-info" id="moon-info-header">Moon in Aries · Waxing Crescent</div>
+    </div>
 
-ter justify-between">
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <h3 style="font-size:16px;">Today's Session</h3>
+        <span class="sig-badge" id="sig-badge">
+          <span>3·6·9</span>
+          <span class="sig-digits" id="sig-digits">—</span>
+        </span>
+      </div>
+      <div style="border-top:1px solid var(--border-subtle); margin:12px 0;"></div>
+      <div class="journal-prompt" id="journal-prompt">
+        Loading your prompt...
+      </div>
+      <div class="journal-meta" id="journal-meta">
+        <span class="text-xs" id="prompt-moon-sign"></span>
+        <span class="text-xs" id="prompt-house"></span>
+        <span class="text-xs" id="prompt-law"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-secondary-dim); font-weight:500;">
+        ✍️ Your Shadow Writing
+      </label>
+      <textarea id="journal-text" placeholder="Write your reflections here..." style="font-family:'Inter',sans-serif; background:rgba(255,255,255,0.04); border:1px solid var(--border-subtle); border-radius:10px; padding:12px 14px; color:var(--text-primary); font-size:15px; font-weight:400; outline:none; width:100%; resize:vertical; min-height:140px; line-height:1.6; margin-top:8px; transition:border-color 0.3s;"></textarea>
+      <div class="flex items-center justify-between mt-12">
+        <span id="session-counter" class="text-sm text-dim"></span>
+        <button id="btn-save-journal" class="btn btn-primary btn-small">Save Entry</button>
+      </div>
+    </div>
+
+    <div class="card" id="cycle-progress-card">
+      <div class="flex items-center justify-between">
         <span class="text-xs">Cycle Progress</span>
         <span class="text-sm text-gold" id="cycle-label">Cycle 1</span>
       </div>
@@ -1137,7 +1180,7 @@ function init() {
     if (!today) return;
     const text = document.getElementById('journal-text').value;
     if (!text.trim()) {
-      // Silent fail - no alert
+      alert('Write something before saving.');
       return;
     }
     const sessions = loadData('alchemize_sessions', []);
@@ -1165,23 +1208,13 @@ function init() {
     const cycle = loadData('alchemize_cycle', 1);
     if (count % 9 === 0) {
       saveData('alchemize_cycle', cycle + 1);
-      // Cycle complete - synthesis ready
+      alert(`🌀 Cycle ${cycle} complete! Your synthesis is ready in the Cycle view.`);
     }
     
     document.getElementById('journal-text').value = '';
     renderSessionCounter();
     renderEntriesList();
-    // Animate save button
-    const saveBtn = document.getElementById('btn-save-journal');
-    const originalText = saveBtn.textContent;
-    saveBtn.textContent = '✦ Saved';
-    saveBtn.style.borderColor = 'rgba(255,255,255,0.2)';
-    saveBtn.style.background = 'rgba(255,255,255,0.08)';
-    setTimeout(() => {
-      saveBtn.textContent = originalText;
-      saveBtn.style.borderColor = '';
-      saveBtn.style.background = '';
-    }, 1500);
+    alert('✓ Entry saved.');
   });
   
   // Claim button
