@@ -5,34 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Alchemize — Shadow Work</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Deep Water palette — astrologically calibrated */
-  --water-abyss: #070B1E;
-  --water-deep: #0C1530;
-  --water-surface: #111D3A;
-  --water-shimmer: rgba(15, 26, 53, 0.8);
-  --candle-gold: #D4A54A;
-  --candle-warm: #E8C87A;
-  --candle-glow: rgba(212, 165, 74, 0.15);
-  --candle-soft: rgba(212, 165, 74, 0.06);
-  --ancient-paper: #E3DACB;
-  --parchment: #C4B8A6;
-  --parchment-dim: #9A8E7C;
-  --lunar-silver: #8FA4B8;
-  --border-subtle: rgba(227, 218, 203, 0.06);
-  --border-glow: rgba(212, 165, 74, 0.08);
+  /* Black Mirror — pure void + sharp filigree gold */
+  --void: #000000;
+  --void-surface: #080808;
+  --void-card: rgba(8, 8, 8, 0.9);
+  --void-lift: #0D0D0D;
+  --filigree: #D4A54A;
+  --filigree-bright: #EDC26A;
+  --filigree-glow: rgba(212, 165, 74, 0.15);
+  --filigree-edge: rgba(212, 165, 74, 0.08);
+  --text-primary: #FFFFFF;
+  --text-secondary: #A09A90;
+  --text-dim: #6B6660;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(212, 165, 74, 0.12);
   --accent: #2D1B3D;
   --accent-glow: rgba(45, 27, 61, 0.4);
   --transition-speed: 1.2s;
   --motion-quick: 0.3s;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
+}* { margin: 0; padding: 0; box-sizing: border-box; }
 html, body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(180deg, var(--water-abyss) 0%, #050916 40%, #040713 100%);
-  color: var(--ancient-paper);
+  background: #000000;
+  color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
   transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
@@ -40,21 +38,21 @@ html, body {
 body {
   display: flex; flex-direction: column; align-items: center;
 }
-h1, h2, h3, h4, .serif, .sacred {
-  font-family: 'Playfair Display', 'Instrument Serif', Georgia, serif;
-  font-weight: 400;
+h1, h2, h3, h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.serif, .sacred, .sacred-headline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
   letter-spacing: 0.02em;
 }
-.sacred-headline {
-  font-family: 'Playfair Display', serif;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: 0.08em;
-}
-::selection { background: var(--candle-gold); color: #070B1E; }
+::selection { background: var(--filigree); color: #070B1E; }
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--parchment-dim); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--text-secondary-dim); border-radius: 2px; }
 
 /* Sacred Geometry Background */
 #sacred-bg {
@@ -90,23 +88,23 @@ h1, h2, h3, h4, .serif, .sacred {
 .phase-header {
   text-align: center; padding: 16px 0 8px;
   font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--parchment-dim);
+  color: var(--text-secondary-dim);
   transition: color var(--transition-speed) ease;
 }
 .phase-header .phase-symbol { font-size: 28px; display: block; margin-bottom: 4px; }
-.phase-header .phase-name { font-weight: 500; }
+.phase-header .phase-name { font-weight: 700; letter-spacing: 6px; }
 .phase-header .moon-info { font-size: 11px; letter-spacing: 1px; margin-top: 2px; opacity: 0.7; }
 
 /* Buttons */
 .btn {
   font-family: 'Inter', sans-serif;
   border: 1px solid var(--border-subtle);
-  background: var(--water-shimmer);
-  color: var(--ancient-paper);
-  padding: 12px 24px;
-  border-radius: 12px;
+  background: var(--void-card);
+  color: var(--text-primary);
+  padding: 14px 28px;
+  border-radius: 10px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
@@ -114,15 +112,16 @@ h1, h2, h3, h4, .serif, .sacred {
 }
 .btn:hover { background: var(--accent); border-color: var(--accent); }
 .btn-primary {
-  background: var(--candle-gold); color: #060A1A; border-color: var(--candle-gold);
-  font-weight: 600;
+  background: var(--filigree); color: #000000; border-color: var(--filigree);
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 .btn-primary:hover { background: #d4b85a; border-color: #d4b85a; }
 .btn-small {
   padding: 8px 16px; font-size: 12px; border-radius: 8px;
 }
 .btn-claim {
-  background: linear-gradient(135deg, var(--candle-gold), #d4b85a);
+  background: linear-gradient(135deg, var(--filigree), #d4b85a);
   color: #060A1A; border: none; font-weight: 700;
   padding: 16px 32px; font-size: 16px; border-radius: 16px;
   width: 100%; cursor: pointer; transition: all 0.3s;
@@ -130,28 +129,26 @@ h1, h2, h3, h4, .serif, .sacred {
 .btn-claim:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(201,168,76,0.3); }
 .btn-claim:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
-/* Cards - water depth glassmorphism */
+/* Cards - void glass */
 .card {
-  background: var(--water-shimmer);
+  background: var(--void-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 20px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition: background var(--transition-speed) ease,
               border-color var(--transition-speed) ease,
               box-shadow var(--motion-quick) ease;
 }
 .card:hover {
   border-color: var(--border-glow);
-}
-
-/* Birth chart input */
+}/* Birth chart input */
 .chart-form { display: flex; flex-direction: column; gap: 16px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group label {
   font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--parchment-dim); font-weight: 500;
+  color: var(--text-secondary-dim); font-weight: 500;
 }
 .form-group select, .form-group input, .form-group textarea {
   font-family: 'Inter', sans-serif;
@@ -159,7 +156,7 @@ h1, h2, h3, h4, .serif, .sacred {
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
   padding: 12px 14px;
-  color: var(--ancient-paper);
+  color: var(--text-primary);
   font-size: 15px;
   outline: none;
   transition: border-color 0.3s;
@@ -173,18 +170,19 @@ h1, h2, h3, h4, .serif, .sacred {
   padding-right: 36px;
 }
 .form-group select:focus, .form-group textarea:focus {
-  border-color: var(--candle-gold);
+  border-color: var(--filigree);
 }
-.form-group option { background: #0D1530; color: var(--ancient-paper); }
+.form-group option { background: #0D1530; color: var(--text-primary); }
 .form-group textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
 
 /* Signature badge */
 .sig-badge {
   display: inline-flex; align-items: center; gap: 10px;
   font-family: 'Playfair Display', serif;
-  font-size: 14px; letter-spacing: 1px;
-  padding: 6px 14px;
-  background: var(--candle-soft);
+  font-size: 14px; letter-spacing: 2px;
+  padding: 8px 16px;
+  font-weight: 600;
+  background: var(--filigree-edge);
   border: 1px solid var(--border-glow);
   border-radius: 20px;
   opacity: 0;
@@ -198,24 +196,25 @@ h1, h2, h3, h4, .serif, .sacred {
 }
 @keyframes sigil-reveal {
   0% { opacity: 0; transform: translateY(8px) scale(0.9); box-shadow: none; }
-  60% { opacity: 1; transform: translateY(-2px) scale(1.05); box-shadow: 0 0 20px var(--candle-glow); }
-  100% { opacity: 1; transform: translateY(0) scale(1); box-shadow: 0 0 8px var(--candle-soft); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.05); box-shadow: 0 0 20px var(--filigree-glow); }
+  100% { opacity: 1; transform: translateY(0) scale(1); box-shadow: 0 0 8px var(--filigree-edge); }
 }
 .sig-digits {
   font-size: 22px; font-weight: 600;
-  background: linear-gradient(135deg, var(--candle-gold), var(--candle-warm));
+  background: linear-gradient(135deg, var(--filigree), var(--filigree-bright));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 /* Journal area */
 .journal-prompt {
-  font-family: 'Instrument Serif', serif;
-  font-size: 18px;
-  line-height: 1.6;
-  font-style: italic;
-  color: var(--ancient-paper);
-  padding: 8px 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 20px;
+  line-height: 1.65;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 12px 0;
+  letter-spacing: 0.01em;
 }
 .journal-meta {
   display: flex; flex-wrap: wrap; gap: 8px;
@@ -231,7 +230,7 @@ h1, h2, h3, h4, .serif, .sacred {
 }
 .entry-item:last-child { border-bottom: none; }
 .entry-item:hover { opacity: 0.8; }
-.entry-date { font-size: 11px; color: var(--parchment-dim); letter-spacing: 1px; }
+.entry-date { font-size: 11px; color: var(--text-secondary-dim); letter-spacing: 1px; }
 .entry-preview { font-size: 13px; margin-top: 4px; opacity: 0.8; line-height: 1.4; }
 .entry-sig { display: inline-block; margin-top: 6px; }
 
@@ -248,18 +247,18 @@ h1, h2, h3, h4, .serif, .sacred {
 .synth-stat .number {
   font-family: 'Instrument Serif', serif;
   font-size: 32px;
-  color: var(--candle-gold);
+  color: var(--filigree);
 }
-.synth-stat .label { font-size: 11px; color: var(--parchment-dim); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+.synth-stat .label { font-size: 11px; color: var(--text-secondary-dim); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
 .synth-law-bar {
   display: flex; align-items: center; gap: 8px; margin: 4px 0;
 }
 .synth-law-bar .bar-fill {
-  height: 6px; border-radius: 3px; background: var(--candle-gold);
+  height: 6px; border-radius: 3px; background: var(--filigree);
   transition: width 0.6s ease;
 }
 .synth-law-bar .law-name { font-size: 12px; min-width: 80px; }
-.synth-law-bar .law-count { font-size: 12px; color: var(--parchment-dim); min-width: 20px; text-align: right; }
+.synth-law-bar .law-count { font-size: 12px; color: var(--text-secondary-dim); min-width: 20px; text-align: right; }
 .synth-phase-dot {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 13px; margin: 4px 8px 4px 0;
@@ -271,17 +270,17 @@ h1, h2, h3, h4, .serif, .sacred {
   padding: 16px;
   background: rgba(255,255,255,0.03);
   border-radius: 12px;
-  border-left: 3px solid var(--candle-gold);
+  border-left: 3px solid var(--filigree);
 }
 
 /* Offer section */
 .offer-card {
   text-align: center;
-  background: linear-gradient(135deg, var(--water-shimmer), rgba(201,168,76,0.06));
+  background: linear-gradient(135deg, var(--void-card), rgba(201,168,76,0.06));
   border: 1px solid rgba(201,168,76,0.2);
 }
-.offer-price { font-family: 'Instrument Serif', serif; font-size: 48px; color: var(--candle-gold); }
-.offer-label { font-size: 12px; color: var(--parchment-dim); letter-spacing: 2px; text-transform: uppercase; }
+.offer-price { font-family: 'Instrument Serif', serif; font-size: 48px; color: var(--filigree); }
+.offer-label { font-size: 12px; color: var(--text-secondary-dim); letter-spacing: 2px; text-transform: uppercase; }
 .offer-sub { font-size: 14px; opacity: 0.7; margin-top: 8px; }
 .spot-counter {
   display: inline-flex; align-items: center; gap: 8px;
@@ -290,7 +289,7 @@ h1, h2, h3, h4, .serif, .sacred {
   border-radius: 20px;
   font-size: 14px;
 }
-.spot-counter .spots-num { font-weight: 700; color: var(--candle-gold); font-size: 18px; }
+.spot-counter .spots-num { font-weight: 700; color: var(--filigree); font-size: 18px; }
 
 /* Nav */
 #nav {
@@ -298,12 +297,12 @@ h1, h2, h3, h4, .serif, .sacred {
   z-index: 10;
   display: flex; justify-content: center;
   padding: 12px 16px 20px;
-  background: linear-gradient(to top, var(--water-abyss) 60%, transparent);
+  background: linear-gradient(to top, var(--void) 60%, transparent);
   transition: background var(--transition-speed) ease;
 }
 .nav-inner {
   display: flex; gap: 4px;
-  background: rgba(13,21,48,0.9);
+  background: rgba(0,0,0,0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-subtle);
@@ -315,16 +314,16 @@ h1, h2, h3, h4, .serif, .sacred {
   flex: 1; text-align: center; padding: 8px 6px;
   font-size: 10px; letter-spacing: 0.5px;
   border-radius: 14px; cursor: pointer;
-  border: none; background: transparent; color: var(--parchment-dim);
+  border: none; background: transparent; color: var(--text-secondary-dim);
   transition: all 0.3s; font-family: 'Inter', sans-serif;
   display: flex; flex-direction: column; align-items: center; gap: 2px;
 }
 .nav-btn .nav-icon { font-size: 20px; }
 .nav-btn.active {
   background: rgba(201,168,76,0.12);
-  color: var(--candle-gold);
+  color: var(--filigree);
 }
-.nav-btn:hover:not(.active) { color: var(--ancient-paper); }
+.nav-btn:hover:not(.active) { color: var(--text-primary); }
 
 /* Phase theme overrides - applied via JS */
 body.theme-nigredo {
@@ -367,17 +366,17 @@ body.theme-rubedo {
 
 /* Setup screen - first visit */
 #view-setup .app-title {
-  font-size: 40px; text-align: center;
-  margin: 40px 0 8px;
+  font-size: 44px; text-align: center;
+  margin: 48px 0 8px;
   font-family: 'Playfair Display', serif;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  background: linear-gradient(135deg, var(--candle-gold), var(--candle-warm), var(--candle-gold));
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, var(--filigree), var(--filigree-bright), var(--filigree));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 #view-setup .app-subtitle {
-  text-align: center; font-size: 13px; color: var(--parchment-dim);
+  text-align: center; font-size: 13px; color: var(--text-secondary-dim);
   letter-spacing: 2px; text-transform: uppercase;
   margin-bottom: 24px;
 }
@@ -385,7 +384,7 @@ body.theme-rubedo {
 /* History */
 #view-history .empty-state {
   text-align: center; padding: 40px 20px;
-  color: var(--parchment-dim); font-size: 14px;
+  color: var(--text-secondary-dim); font-size: 14px;
 }
 
 /* Loading / empty */
@@ -395,7 +394,7 @@ body.theme-rubedo {
 /* Modal / detail view */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(6,10,26,0.85);
+  background: rgba(0,0,0,0.92);
   backdrop-filter: blur(8px);
   z-index: 100;
   display: none; align-items: center; justify-content: center;
@@ -403,7 +402,7 @@ body.theme-rubedo {
 }
 .modal-overlay.open { display: flex; }
 .modal-content {
-  background: var(--water-deep);
+  background: var(--void-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
   padding: 24px;
@@ -413,7 +412,7 @@ body.theme-rubedo {
 .modal-content .modal-close {
   float: right; cursor: pointer; font-size: 20px;
   opacity: 0.5; transition: opacity 0.2s;
-  background: none; border: none; color: var(--ancient-paper);
+  background: none; border: none; color: var(--text-primary);
 }
 .modal-content .modal-close:hover { opacity: 1; }
 
@@ -465,8 +464,8 @@ body.theme-rubedo {
 .items-center { align-items: center; }
 .justify-between { justify-content: space-between; }
 .text-center { text-align: center; }
-.text-dim { color: var(--parchment-dim); }
-.text-gold { color: var(--candle-gold); }
+.text-dim { color: var(--text-secondary-dim); }
+.text-gold { color: var(--filigree); }
 .text-sm { font-size: 13px; }
 .text-xs { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
 .w-full { width: 100%; }
@@ -501,7 +500,7 @@ body.theme-rubedo {
     <p class="app-subtitle">⚗️ Shadow Work · Daily Practice</p>
     <div class="card">
       <h3 style="margin-bottom:16px; font-size:18px;">Your Birth Chart</h3>
-      <p style="font-size:13px; color:var(--parchment-dim); margin-bottom:16px; line-height:1.5;">
+      <p style="font-size:13px; color:var(--text-secondary-dim); margin-bottom:16px; line-height:1.5;">
         Enter your natal placements so Alchemize can generate personalized shadow prompts based on your chart and today's transits.
       </p>
       <div class="chart-form">
@@ -568,10 +567,10 @@ body.theme-rubedo {
     </div>
 
     <div class="card">
-      <label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--parchment-dim); font-weight:500;">
+      <label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-secondary-dim); font-weight:500;">
         ✍️ Your Shadow Writing
       </label>
-      <textarea id="journal-text" placeholder="Write your reflections here..." style="font-family:'Inter',sans-serif; background:rgba(255,255,255,0.04); border:1px solid var(--border-subtle); border-radius:10px; padding:12px 14px; color:var(--ancient-paper); font-size:15px; outline:none; width:100%; resize:vertical; min-height:140px; line-height:1.6; margin-top:8px; transition:border-color 0.3s;"></textarea>
+      <textarea id="journal-text" placeholder="Write your reflections here..." style="font-family:'Inter',sans-serif; background:rgba(255,255,255,0.04); border:1px solid var(--border-subtle); border-radius:10px; padding:14px 16px; color:var(--text-primary); font-size:16px; font-weight:500; outline:none; width:100%; resize:vertical; min-height:140px; line-height:1.6; margin-top:8px; transition:border-color 0.3s;"></textarea>
       <div class="flex items-center justify-between mt-12">
         <span id="session-counter" class="text-sm text-dim"></span>
         <button id="btn-save-journal" class="btn btn-primary btn-small">Save Entry</button>
@@ -584,7 +583,7 @@ body.theme-rubedo {
         <span class="text-sm text-gold" id="cycle-label">Cycle 1</span>
       </div>
       <div style="margin-top:8px; height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden;">
-        <div id="cycle-bar" style="height:100%; background:var(--candle-gold); border-radius:2px; width:0%; transition:width 0.6s ease;"></div>
+        <div id="cycle-bar" style="height:100%; background:var(--filigree); border-radius:2px; width:0%; transition:width 0.6s ease;"></div>
       </div>
     </div>
   </div>
@@ -878,8 +877,8 @@ function applyTheme(today) {
   const theme = PHASE_THEME[phase] || PHASE_THEME['Nigredo'];
   document.body.className = theme.body;
   // Update CSS variables for dynamic elements
-  document.documentElement.style.setProperty('--water-abyss', theme.bg);
-  document.documentElement.style.setProperty('--water-deep', theme.surface);
+  document.documentElement.style.setProperty('--void', theme.bg);
+  document.documentElement.style.setProperty('--void-surface', theme.surface);
   document.documentElement.style.setProperty('--accent', theme.accent);
   
   // Chemical reaction animation on phase change
@@ -1078,7 +1077,7 @@ function showEntryModal(idx) {
   document.getElementById('modal-body').innerHTML = `
     <p class="text-xs text-dim">${entry.date || 'Unknown date'} · ${entry.phase || ''}</p>
     <span class="sig-badge mt-8"><span>3·6·9</span><span class="sig-digits">${entry.signature || '—'}</span></span>
-    <div style="margin-top:16px; padding:16px; background:rgba(255,255,255,0.04); border-radius:12px; border-left:3px solid var(--candle-gold);">
+    <div style="margin-top:16px; padding:16px; background:rgba(255,255,255,0.04); border-radius:12px; border-left:3px solid var(--filigree);">
       <p style="font-family:'Instrument Serif',serif; font-style:italic; line-height:1.6; font-size:15px;">
         ${entry.prompt || 'No prompt recorded'}
       </p>
