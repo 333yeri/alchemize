@@ -5,27 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Alchemize — Shadow Work</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-base: #060A1A;
-  --bg-surface: #0D1530;
-  --bg-card: rgba(13, 21, 48, 0.8);
+  /* Deep Water palette — astrologically calibrated */
+  --water-abyss: #070B1E;
+  --water-deep: #0C1530;
+  --water-surface: #111D3A;
+  --water-shimmer: rgba(15, 26, 53, 0.8);
+  --candle-gold: #D4A54A;
+  --candle-warm: #E8C87A;
+  --candle-glow: rgba(212, 165, 74, 0.15);
+  --candle-soft: rgba(212, 165, 74, 0.06);
+  --ancient-paper: #E3DACB;
+  --parchment: #C4B8A6;
+  --parchment-dim: #9A8E7C;
+  --lunar-silver: #8FA4B8;
+  --border-subtle: rgba(227, 218, 203, 0.06);
+  --border-glow: rgba(212, 165, 74, 0.08);
   --accent: #2D1B3D;
   --accent-glow: rgba(45, 27, 61, 0.4);
-  --text: #DDD6CB;
-  --text-dim: #8A7E72;
-  --text-bright: #F0EBE0;
-  --gold: #C9A84C;
-  --lunar: #8FA4B8;
-  --border: rgba(221, 214, 203, 0.08);
-  --transition-speed: 0.8s;
+  --transition-speed: 1.2s;
+  --motion-quick: 0.3s;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg-base);
-  color: var(--text);
+  background: linear-gradient(180deg, var(--water-abyss) 0%, #050916 40%, #040713 100%);
+  color: var(--ancient-paper);
   min-height: 100vh;
   overflow-x: hidden;
   transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
@@ -33,14 +40,21 @@ html, body {
 body {
   display: flex; flex-direction: column; align-items: center;
 }
-h1, h2, h3, h4, .serif {
-  font-family: 'Instrument Serif', serif;
+h1, h2, h3, h4, .serif, .sacred {
+  font-family: 'Playfair Display', 'Instrument Serif', Georgia, serif;
   font-weight: 400;
+  letter-spacing: 0.02em;
 }
-::selection { background: var(--gold); color: #060A1A; }
+.sacred-headline {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.08em;
+}
+::selection { background: var(--candle-gold); color: #070B1E; }
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--text-dim); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--parchment-dim); border-radius: 2px; }
 
 /* Sacred Geometry Background */
 #sacred-bg {
@@ -76,7 +90,7 @@ h1, h2, h3, h4, .serif {
 .phase-header {
   text-align: center; padding: 16px 0 8px;
   font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--parchment-dim);
   transition: color var(--transition-speed) ease;
 }
 .phase-header .phase-symbol { font-size: 28px; display: block; margin-bottom: 4px; }
@@ -86,9 +100,9 @@ h1, h2, h3, h4, .serif {
 /* Buttons */
 .btn {
   font-family: 'Inter', sans-serif;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text);
+  border: 1px solid var(--border-subtle);
+  background: var(--water-shimmer);
+  color: var(--ancient-paper);
   padding: 12px 24px;
   border-radius: 12px;
   font-size: 14px;
@@ -100,7 +114,7 @@ h1, h2, h3, h4, .serif {
 }
 .btn:hover { background: var(--accent); border-color: var(--accent); }
 .btn-primary {
-  background: var(--gold); color: #060A1A; border-color: var(--gold);
+  background: var(--candle-gold); color: #060A1A; border-color: var(--candle-gold);
   font-weight: 600;
 }
 .btn-primary:hover { background: #d4b85a; border-color: #d4b85a; }
@@ -108,7 +122,7 @@ h1, h2, h3, h4, .serif {
   padding: 8px 16px; font-size: 12px; border-radius: 8px;
 }
 .btn-claim {
-  background: linear-gradient(135deg, var(--gold), #d4b85a);
+  background: linear-gradient(135deg, var(--candle-gold), #d4b85a);
   color: #060A1A; border: none; font-weight: 700;
   padding: 16px 32px; font-size: 16px; border-radius: 16px;
   width: 100%; cursor: pointer; transition: all 0.3s;
@@ -116,15 +130,20 @@ h1, h2, h3, h4, .serif {
 .btn-claim:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(201,168,76,0.3); }
 .btn-claim:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
-/* Cards */
+/* Cards - water depth glassmorphism */
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  background: var(--water-shimmer);
+  border: 1px solid var(--border-subtle);
   border-radius: 16px;
   padding: 20px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background var(--transition-speed) ease,
+              border-color var(--transition-speed) ease,
+              box-shadow var(--motion-quick) ease;
+}
+.card:hover {
+  border-color: var(--border-glow);
 }
 
 /* Birth chart input */
@@ -132,15 +151,15 @@ h1, h2, h3, h4, .serif {
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group label {
   font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--text-dim); font-weight: 500;
+  color: var(--parchment-dim); font-weight: 500;
 }
 .form-group select, .form-group input, .form-group textarea {
   font-family: 'Inter', sans-serif;
   background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-subtle);
   border-radius: 10px;
   padding: 12px 14px;
-  color: var(--text);
+  color: var(--ancient-paper);
   font-size: 15px;
   outline: none;
   transition: border-color 0.3s;
@@ -154,24 +173,37 @@ h1, h2, h3, h4, .serif {
   padding-right: 36px;
 }
 .form-group select:focus, .form-group textarea:focus {
-  border-color: var(--gold);
+  border-color: var(--candle-gold);
 }
-.form-group option { background: #0D1530; color: var(--text); }
+.form-group option { background: #0D1530; color: var(--ancient-paper); }
 .form-group textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
 
 /* Signature badge */
 .sig-badge {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Playfair Display', serif;
   font-size: 14px; letter-spacing: 1px;
   padding: 6px 14px;
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.2);
+  background: var(--candle-soft);
+  border: 1px solid var(--border-glow);
   border-radius: 20px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.sig-badge.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  animation: sigil-reveal 0.8s ease forwards;
+}
+@keyframes sigil-reveal {
+  0% { opacity: 0; transform: translateY(8px) scale(0.9); box-shadow: none; }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.05); box-shadow: 0 0 20px var(--candle-glow); }
+  100% { opacity: 1; transform: translateY(0) scale(1); box-shadow: 0 0 8px var(--candle-soft); }
 }
 .sig-digits {
   font-size: 22px; font-weight: 600;
-  background: linear-gradient(135deg, var(--gold), #d4b85a);
+  background: linear-gradient(135deg, var(--candle-gold), var(--candle-warm));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -182,7 +214,7 @@ h1, h2, h3, h4, .serif {
   font-size: 18px;
   line-height: 1.6;
   font-style: italic;
-  color: var(--text-bright);
+  color: var(--ancient-paper);
   padding: 8px 0;
 }
 .journal-meta {
@@ -193,13 +225,13 @@ h1, h2, h3, h4, .serif {
 /* Entries list */
 .entry-item {
   padding: 14px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-subtle);
   cursor: pointer;
   transition: all 0.2s;
 }
 .entry-item:last-child { border-bottom: none; }
 .entry-item:hover { opacity: 0.8; }
-.entry-date { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
+.entry-date { font-size: 11px; color: var(--parchment-dim); letter-spacing: 1px; }
 .entry-preview { font-size: 13px; margin-top: 4px; opacity: 0.8; line-height: 1.4; }
 .entry-sig { display: inline-block; margin-top: 6px; }
 
@@ -211,23 +243,23 @@ h1, h2, h3, h4, .serif {
   text-align: center; padding: 16px;
   background: rgba(255,255,255,0.03);
   border-radius: 12px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-subtle);
 }
 .synth-stat .number {
   font-family: 'Instrument Serif', serif;
   font-size: 32px;
-  color: var(--gold);
+  color: var(--candle-gold);
 }
-.synth-stat .label { font-size: 11px; color: var(--text-dim); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+.synth-stat .label { font-size: 11px; color: var(--parchment-dim); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
 .synth-law-bar {
   display: flex; align-items: center; gap: 8px; margin: 4px 0;
 }
 .synth-law-bar .bar-fill {
-  height: 6px; border-radius: 3px; background: var(--gold);
+  height: 6px; border-radius: 3px; background: var(--candle-gold);
   transition: width 0.6s ease;
 }
 .synth-law-bar .law-name { font-size: 12px; min-width: 80px; }
-.synth-law-bar .law-count { font-size: 12px; color: var(--text-dim); min-width: 20px; text-align: right; }
+.synth-law-bar .law-count { font-size: 12px; color: var(--parchment-dim); min-width: 20px; text-align: right; }
 .synth-phase-dot {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 13px; margin: 4px 8px 4px 0;
@@ -239,17 +271,17 @@ h1, h2, h3, h4, .serif {
   padding: 16px;
   background: rgba(255,255,255,0.03);
   border-radius: 12px;
-  border-left: 3px solid var(--gold);
+  border-left: 3px solid var(--candle-gold);
 }
 
 /* Offer section */
 .offer-card {
   text-align: center;
-  background: linear-gradient(135deg, var(--bg-card), rgba(201,168,76,0.06));
+  background: linear-gradient(135deg, var(--water-shimmer), rgba(201,168,76,0.06));
   border: 1px solid rgba(201,168,76,0.2);
 }
-.offer-price { font-family: 'Instrument Serif', serif; font-size: 48px; color: var(--gold); }
-.offer-label { font-size: 12px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
+.offer-price { font-family: 'Instrument Serif', serif; font-size: 48px; color: var(--candle-gold); }
+.offer-label { font-size: 12px; color: var(--parchment-dim); letter-spacing: 2px; text-transform: uppercase; }
 .offer-sub { font-size: 14px; opacity: 0.7; margin-top: 8px; }
 .spot-counter {
   display: inline-flex; align-items: center; gap: 8px;
@@ -258,7 +290,7 @@ h1, h2, h3, h4, .serif {
   border-radius: 20px;
   font-size: 14px;
 }
-.spot-counter .spots-num { font-weight: 700; color: var(--gold); font-size: 18px; }
+.spot-counter .spots-num { font-weight: 700; color: var(--candle-gold); font-size: 18px; }
 
 /* Nav */
 #nav {
@@ -266,7 +298,7 @@ h1, h2, h3, h4, .serif {
   z-index: 10;
   display: flex; justify-content: center;
   padding: 12px 16px 20px;
-  background: linear-gradient(to top, var(--bg-base) 60%, transparent);
+  background: linear-gradient(to top, var(--water-abyss) 60%, transparent);
   transition: background var(--transition-speed) ease;
 }
 .nav-inner {
@@ -274,7 +306,7 @@ h1, h2, h3, h4, .serif {
   background: rgba(13,21,48,0.9);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
   padding: 6px;
   max-width: 420px; width: 100%;
@@ -283,41 +315,69 @@ h1, h2, h3, h4, .serif {
   flex: 1; text-align: center; padding: 8px 6px;
   font-size: 10px; letter-spacing: 0.5px;
   border-radius: 14px; cursor: pointer;
-  border: none; background: transparent; color: var(--text-dim);
+  border: none; background: transparent; color: var(--parchment-dim);
   transition: all 0.3s; font-family: 'Inter', sans-serif;
   display: flex; flex-direction: column; align-items: center; gap: 2px;
 }
 .nav-btn .nav-icon { font-size: 20px; }
 .nav-btn.active {
   background: rgba(201,168,76,0.12);
-  color: var(--gold);
+  color: var(--candle-gold);
 }
-.nav-btn:hover:not(.active) { color: var(--text); }
+.nav-btn:hover:not(.active) { color: var(--ancient-paper); }
 
 /* Phase theme overrides - applied via JS */
 body.theme-nigredo {
   --accent: #2D1B3D; --accent-glow: rgba(45,27,61,0.4);
+  --phase-glow: rgba(45,27,61,0.15);
 }
 body.theme-albedo {
   --accent: #8FA4B8; --accent-glow: rgba(143,164,184,0.3);
+  --phase-glow: rgba(143,164,184,0.12);
 }
 body.theme-citrinitas {
-  --accent: #C9A84C; --accent-glow: rgba(201,168,76,0.3);
+  --accent: #D4A54A; --accent-glow: rgba(212,165,74,0.3);
+  --phase-glow: rgba(212,165,74,0.15);
 }
 body.theme-rubedo {
   --accent: #8B3A3A; --accent-glow: rgba(139,58,58,0.3);
+  --phase-glow: rgba(139,58,58,0.15);
+}
+
+/* Chemical reaction phase transition */
+.phase-header, .card, #nav .nav-inner {
+  transition: background var(--transition-speed) ease,
+              border-color var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
+}
+#phase-symbol-header {
+  transition: transform var(--transition-speed) ease,
+              opacity var(--transition-speed) ease,
+              filter var(--transition-speed) ease;
+}
+#phase-symbol-header.transmuting {
+  animation: chemical-dissolve 1.2s ease forwards;
+}
+@keyframes chemical-dissolve {
+  0% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
+  40% { transform: scale(0.6) rotate(90deg); opacity: 0.3; filter: blur(4px); }
+  60% { transform: scale(1.2) rotate(-10deg); opacity: 0.7; filter: blur(0); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0); }
 }
 
 /* Setup screen - first visit */
 #view-setup .app-title {
-  font-size: 36px; text-align: center;
+  font-size: 40px; text-align: center;
   margin: 40px 0 8px;
-  background: linear-gradient(135deg, var(--gold), #d4b85a, var(--gold));
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--candle-gold), var(--candle-warm), var(--candle-gold));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 #view-setup .app-subtitle {
-  text-align: center; font-size: 13px; color: var(--text-dim);
+  text-align: center; font-size: 13px; color: var(--parchment-dim);
   letter-spacing: 2px; text-transform: uppercase;
   margin-bottom: 24px;
 }
@@ -325,7 +385,7 @@ body.theme-rubedo {
 /* History */
 #view-history .empty-state {
   text-align: center; padding: 40px 20px;
-  color: var(--text-dim); font-size: 14px;
+  color: var(--parchment-dim); font-size: 14px;
 }
 
 /* Loading / empty */
@@ -343,8 +403,8 @@ body.theme-rubedo {
 }
 .modal-overlay.open { display: flex; }
 .modal-content {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
+  background: var(--water-deep);
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
   padding: 24px;
   max-width: 440px; width: 100%;
@@ -353,7 +413,7 @@ body.theme-rubedo {
 .modal-content .modal-close {
   float: right; cursor: pointer; font-size: 20px;
   opacity: 0.5; transition: opacity 0.2s;
-  background: none; border: none; color: var(--text);
+  background: none; border: none; color: var(--ancient-paper);
 }
 .modal-content .modal-close:hover { opacity: 1; }
 
@@ -371,6 +431,28 @@ body.theme-rubedo {
   #view-setup .app-title { font-size: 28px; }
 }
 
+/* Micro-motion utility */
+.motion-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+.motion-slide-up {
+  animation: slideUp 0.5s ease forwards;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.interactive-lift {
+  transition: transform var(--motion-quick) ease, box-shadow var(--motion-quick) ease;
+}
+.interactive-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.interactive-lift:active {
+  transform: translateY(0);
+}
+
 /* Utility */
 .mt-8 { margin-top: 8px; }
 .mt-12 { margin-top: 12px; }
@@ -383,8 +465,8 @@ body.theme-rubedo {
 .items-center { align-items: center; }
 .justify-between { justify-content: space-between; }
 .text-center { text-align: center; }
-.text-dim { color: var(--text-dim); }
-.text-gold { color: var(--gold); }
+.text-dim { color: var(--parchment-dim); }
+.text-gold { color: var(--candle-gold); }
 .text-sm { font-size: 13px; }
 .text-xs { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
 .w-full { width: 100%; }
@@ -419,7 +501,7 @@ body.theme-rubedo {
     <p class="app-subtitle">⚗️ Shadow Work · Daily Practice</p>
     <div class="card">
       <h3 style="margin-bottom:16px; font-size:18px;">Your Birth Chart</h3>
-      <p style="font-size:13px; color:var(--text-dim); margin-bottom:16px; line-height:1.5;">
+      <p style="font-size:13px; color:var(--parchment-dim); margin-bottom:16px; line-height:1.5;">
         Enter your natal placements so Alchemize can generate personalized shadow prompts based on your chart and today's transits.
       </p>
       <div class="chart-form">
@@ -474,7 +556,7 @@ body.theme-rubedo {
           <span class="sig-digits" id="sig-digits">—</span>
         </span>
       </div>
-      <div style="border-top:1px solid var(--border); margin:12px 0;"></div>
+      <div style="border-top:1px solid var(--border-subtle); margin:12px 0;"></div>
       <div class="journal-prompt" id="journal-prompt">
         Loading your prompt...
       </div>
@@ -486,10 +568,10 @@ body.theme-rubedo {
     </div>
 
     <div class="card">
-      <label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); font-weight:500;">
+      <label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--parchment-dim); font-weight:500;">
         ✍️ Your Shadow Writing
       </label>
-      <textarea id="journal-text" placeholder="Write your reflections here..." style="font-family:'Inter',sans-serif; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:10px; padding:12px 14px; color:var(--text); font-size:15px; outline:none; width:100%; resize:vertical; min-height:140px; line-height:1.6; margin-top:8px; transition:border-color 0.3s;"></textarea>
+      <textarea id="journal-text" placeholder="Write your reflections here..." style="font-family:'Inter',sans-serif; background:rgba(255,255,255,0.04); border:1px solid var(--border-subtle); border-radius:10px; padding:12px 14px; color:var(--ancient-paper); font-size:15px; outline:none; width:100%; resize:vertical; min-height:140px; line-height:1.6; margin-top:8px; transition:border-color 0.3s;"></textarea>
       <div class="flex items-center justify-between mt-12">
         <span id="session-counter" class="text-sm text-dim"></span>
         <button id="btn-save-journal" class="btn btn-primary btn-small">Save Entry</button>
@@ -502,7 +584,7 @@ body.theme-rubedo {
         <span class="text-sm text-gold" id="cycle-label">Cycle 1</span>
       </div>
       <div style="margin-top:8px; height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden;">
-        <div id="cycle-bar" style="height:100%; background:var(--gold); border-radius:2px; width:0%; transition:width 0.6s ease;"></div>
+        <div id="cycle-bar" style="height:100%; background:var(--candle-gold); border-radius:2px; width:0%; transition:width 0.6s ease;"></div>
       </div>
     </div>
   </div>
@@ -549,19 +631,19 @@ body.theme-rubedo {
 <div id="nav">
   <div class="nav-inner">
     <button class="nav-btn active" data-view="daily">
-      <span class="nav-icon">⚗️</span>
+      <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
       <span>Today</span>
     </button>
     <button class="nav-btn" data-view="history">
-      <span class="nav-icon">📜</span>
+      <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16M7 4v3M17 4v3"/><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 12h8M8 16h5"/></svg></span>
       <span>Journal</span>
     </button>
     <button class="nav-btn" data-view="synthesis">
-      <span class="nav-icon">🌀</span>
+      <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2a10 10 0 0 1 8 16"/><path d="M12 2a10 10 0 0 0-8 16"/><path d="M12 22a10 10 0 0 1-8-16"/><path d="M12 22a10 10 0 0 0 8-16"/><circle cx="12" cy="12" r="2"/></svg></span>
       <span>Cycle</span>
     </button>
     <button class="nav-btn" data-view="offer">
-      <span class="nav-icon">💎</span>
+      <span class="nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2L3 8l3 5 6 3 6-3 3-5z"/><path d="M3 8v8l9 6 9-6V8"/><path d="M12 22V14"/></svg></span>
       <span>Offer</span>
     </button>
   </div>
@@ -788,15 +870,28 @@ function renderPhaseHeader(today) {
   document.getElementById('moon-info-header').textContent = `Moon in ${today.moonSign} ${SIGIL[today.moonSign] || ''} · ${today.moonPhase}`;
 }
 
+let _prevPhase = null;
+
 function applyTheme(today) {
   if (!today) return;
   const phase = today.alchemicalPhase;
   const theme = PHASE_THEME[phase] || PHASE_THEME['Nigredo'];
   document.body.className = theme.body;
   // Update CSS variables for dynamic elements
-  document.documentElement.style.setProperty('--bg-base', theme.bg);
-  document.documentElement.style.setProperty('--bg-surface', theme.surface);
+  document.documentElement.style.setProperty('--water-abyss', theme.bg);
+  document.documentElement.style.setProperty('--water-deep', theme.surface);
   document.documentElement.style.setProperty('--accent', theme.accent);
+  
+  // Chemical reaction animation on phase change
+  if (_prevPhase && _prevPhase !== phase) {
+    const symbol = document.getElementById('phase-symbol-header');
+    if (symbol) {
+      symbol.classList.remove('transmuting');
+      void symbol.offsetWidth;
+      symbol.classList.add('transmuting');
+    }
+  }
+  _prevPhase = phase;
 }
 
 function renderDailyView(today) {
@@ -983,7 +1078,7 @@ function showEntryModal(idx) {
   document.getElementById('modal-body').innerHTML = `
     <p class="text-xs text-dim">${entry.date || 'Unknown date'} · ${entry.phase || ''}</p>
     <span class="sig-badge mt-8"><span>3·6·9</span><span class="sig-digits">${entry.signature || '—'}</span></span>
-    <div style="margin-top:16px; padding:16px; background:rgba(255,255,255,0.04); border-radius:12px; border-left:3px solid var(--gold);">
+    <div style="margin-top:16px; padding:16px; background:rgba(255,255,255,0.04); border-radius:12px; border-left:3px solid var(--candle-gold);">
       <p style="font-family:'Instrument Serif',serif; font-style:italic; line-height:1.6; font-size:15px;">
         ${entry.prompt || 'No prompt recorded'}
       </p>
@@ -1084,6 +1179,13 @@ function init() {
       house: today.house
     });
     saveData('alchemize_sessions', sessions);
+    
+    // Reveal 369 badge on save - earned reveal
+    const sigBadge = document.getElementById('sig-badge');
+    if (sigBadge) {
+      sigBadge.classList.add('revealed');
+      setTimeout(() => sigBadge.classList.remove('revealed'), 4000);
+    }
     
     // Check cycle completion
     const count = sessions.length;
