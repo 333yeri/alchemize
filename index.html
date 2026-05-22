@@ -36,7 +36,7 @@
   <!-- SETUP VIEW -->
   <div id="view-setup" class="view">
     <h1 class="app-title">Alchemize</h1>
-    <p class="app-subtitle">⚗️ Shadow Work · Daily Practice</p>
+    <p class="app-subtitle">⊡ Shadow Work · Daily Practice</p>
     <div class="card">
       <h3 style="margin-bottom:16px; font-size:18px;">Your Birth Chart</h3>
       <p style="font-size:13px; color:var(--text-dim); margin-bottom:16px; line-height:1.5;">
@@ -44,7 +44,15 @@
       </p>
       <div class="chart-form">
         <div class="form-group">
-          <label>☀️ Sun Sign</label>
+          <label class="sigil-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Sun Sign</label>
+          <!-- The Seed Logo -->
+          <template id="seed-sigil">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12,2 4,20 20,20"/><!-- top triangle pointing down -->
+              <polygon points="12,22 4,4 20,4"/><!-- bottom triangle pointing up -->
+              <circle cx="12" cy="12" r="3"/><!-- center circle -->
+            </svg>
+          </template>
           <select id="input-sun">
             <option value="">— Select —</option>
             <option value="Aries">Aries</option><option value="Taurus">Taurus</option><option value="Gemini">Gemini</option>
@@ -54,7 +62,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label>🌙 Moon Sign</label>
+          <label class="sigil-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a12 12 0 0 0 0 20 10 10 0 0 1 0-20z" stroke-linejoin="round"/></svg> Moon Sign</label>
           <select id="input-moon">
             <option value="">— Select —</option>
             <option value="Aries">Aries</option><option value="Taurus">Taurus</option><option value="Gemini">Gemini</option>
@@ -64,7 +72,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label>⬆️ Rising Sign (Ascendant)</label>
+          <label class="sigil-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12,2 2,22 22,22" stroke-linejoin="round"/></svg> Rising (Ascendant)</label>
           <select id="input-rising">
             <option value="">— Select —</option>
             <option value="Aries">Aries</option><option value="Taurus">Taurus</option><option value="Gemini">Gemini</option>
@@ -73,7 +81,9 @@
             <option value="Capricorn">Capricorn</option><option value="Aquarius">Aquarius</option><option value="Pisces">Pisces</option>
           </select>
         </div>
-        <button id="btn-save-chart" class="btn btn-primary w-full mt-8">⚗️ Begin Your Practice</button>
+        <button id="btn-save-chart" class="btn btn-primary w-full mt-8">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H4M12 4v16"/></svg>
+          Begin Your Practice</button>
       </div>
     </div>
   </div>
@@ -109,9 +119,13 @@
     <div id="practice-container"></div>
 
     <div class="card">
-      <label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); font-weight:500;">
-        ✍️ Your Shadow Writing
-      </label>
+<label style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-dim); font-weight:500;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="margin-right:6px;">
+          <polyline points="4,7 12,3 20,7"/>
+          <polyline points="4,17 12,21 20,17"/>
+          <line x1="12" y1="3" x2="12" y2="21"/>
+        </svg>
+        Your Shadow Writing</label>
       <textarea id="journal-text" placeholder="Write your reflections here..." style="font-family:'Inter',sans-serif; background:rgba(255,255,255,0.04); border:1px solid var(--border-subtle); border-radius:10px; padding:12px 14px; color:var(--text-primary); font-size:15px; font-weight:400; outline:none; width:100%; resize:vertical; min-height:140px; line-height:1.6; margin-top:8px; transition:border-color 0.3s;"></textarea>
       <div class="flex items-center justify-between mt-12">
         <span id="session-counter" class="text-sm text-dim"></span>
@@ -132,37 +146,63 @@
 
   <!-- HISTORY VIEW -->
   <div id="view-history" class="view">
-    <h2 style="font-size:22px; margin-bottom:4px;">📜 Journal History</h2>
+    <h2 style="font-size:22px; margin-bottom:4px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-3px;">
+            <rect x="4" y="4" width="16" height="16" rx="2"/>
+            <line x1="8" y1="10" x2="16" y2="10"/>
+            <line x1="8" y1="14" x2="14" y2="14"/>
+          </svg>
+          Journal History</h2>
     <p class="text-sm text-dim" style="margin-bottom:12px;">Your recorded sessions</p>
     <div id="entries-list"></div>
   </div>
 
   <!-- SYNTHESIS VIEW -->
   <div id="view-synthesis" class="view">
-    <h2 style="font-size:22px; text-align:center;">🌀 Cycle Synthesis</h2>
+    <h2 style="font-size:22px; text-align:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="margin-right:6px;vertical-align:-3px;">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="6"/>
+            <circle cx="12" cy="12" r="2"/>
+            <path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z" opacity="0.4"/>
+          </svg>
+          Cycle Synthesis</h2>
     <p class="text-sm text-dim text-center" style="margin-bottom:12px;">Every 9 sessions completes an alchemical cycle</p>
     <div id="synthesis-content"></div>
   </div>
 
   <!-- OFFER VIEW -->
   <div id="view-offer" class="view">
-    <h2 style="font-size:22px; text-align:center;">💎 Founding Offer</h2>
+    <h2 style="font-size:22px; text-align:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" style="margin-right:6px;vertical-align:-3px;">
+            <polygon points="12,2 22,12 12,22 2,12"/>
+            <polygon points="12,6 18,12 12,18 6,12"/>
+          </svg>
+          Founding Offer</h2>
     <p class="text-sm text-dim text-center" style="margin-bottom:16px;">Be among the first to alchemize</p>
     <div class="card offer-card">
       <p class="offer-label">One-Time · Lifetime Access</p>
       <div class="offer-price">€59</div>
       <p class="offer-sub">Then €9.99/month after founding batch</p>
       <div class="spot-counter">
-        <span>🔥</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12,2 15,9 22,9 16,14 18,22 12,17 6,22 8,14 2,9 9,9"/></svg>
         <span id="spots-display"><span class="spots-num">50</span> spots remaining</span>
       </div>
-      <button id="btn-claim" class="btn-claim">⚗️ Claim Your Spot</button>
+      <button id="btn-claim" class="btn-claim">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px;">
+          <polygon points="12,2 22,12 12,22 2,12"/>
+          <polygon points="12,6 18,12 12,18 6,12"/>
+        </svg>
+        Claim Your Spot</button>
       <p class="text-xs text-dim mt-12">50 founding spots total · No recurring commitment if you join now</p>
     </div>
     <div class="card" style="margin-top:4px;">
-      <p class="text-sm" style="line-height:1.6;">
-        ✦ Lifetime prompt generation ✦ Personalized shadow work ✦ Offline-first privacy
-        ✦ All future phases ✦ Priority feature requests
+      <p class="text-sm" style="line-height:1.6; color:var(--text-secondary);">
+        <span class="feature-dot"></span> Lifetime prompt generation
+        <span class="feature-dot"></span> Personalized shadow work
+        <span class="feature-dot"></span> Offline-first privacy
+        <span class="feature-dot"></span> All future phases
+        <span class="feature-dot"></span> Priority feature requests
       </p>
     </div>
   </div>
@@ -193,7 +233,9 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal-content">
-    <button class="modal-close" id="modal-close">✕</button>
+    <button class="modal-close" id="modal-close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
     <div id="modal-body"></div>
   </div>
 </div>

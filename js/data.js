@@ -87,7 +87,7 @@ const PHASE_MAP = {
   'Last Quarter':'Rubedo','Waning Crescent':'Rubedo'
 };
 const PHASE_INDEX = { 'Nigredo':1, 'Albedo':2, 'Citrinitas':3, 'Rubedo':4 };
-const PHASE_SYMBOL = { 'Nigredo':'⚫','Albedo':'⚪','Citrinitas':'🟡','Rubedo':'🔴' };
+const PHASE_SYMBOL = { 'Nigredo':'●','Albedo':'○','Citrinitas':'◉','Rubedo':'⊛' };
 const PHASE_THEME = {
   'Nigredo': { body: 'theme-nigredo', bg: '#060A1A', surface: '#0D1530', accent: '#2D1B3D' },
   'Albedo': { body: 'theme-albedo', bg: '#0D1530', surface: '#182545', accent: '#8FA4B8' },

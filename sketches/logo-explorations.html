@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alchemize — Logo Explorations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #000000;
+    font-family: 'Inter', sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 60px 20px;
+    color: #FFFFFF;
+  }
+  h1 {
+    font-family: 'EB Garamond', serif; font-weight: 700;
+    font-size: 36px; letter-spacing: 0.12em;
+    color: #D4A54A; margin-bottom: 8px;
+  }
+  .sub {
+    font-size: 14px; color: #6B6660; letter-spacing: 0.1em;
+    margin-bottom: 48px;
+  }
+  .logo-grid {
+    display: flex; flex-wrap: wrap; gap: 40px;
+    justify-content: center; max-width: 900px;
+  }
+  .logo-card {
+    background: rgba(8,8,8,0.9);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px; padding: 30px;
+    text-align: center;
+    width: 260px;
+    transition: border-color 0.3s;
+  }
+  .logo-card:hover { border-color: rgba(212,165,74,0.15); }
+  .logo-card svg { width: 160px; height: 160px; margin-bottom: 16px; }
+  .logo-card .label {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 16px; color: #D4A54A; margin-bottom: 4px;
+  }
+  .logo-card .desc {
+    font-size: 12px; color: #6B6660; line-height: 1.5;
+  }
+  .logo-card .coords {
+    font-size: 10px; color: rgba(255,255,255,0.15);
+    margin-top: 12px; font-family: 'Inter', monospace;
+    line-height: 1.6;
+  }
+  .divider {
+    width: 1px; height: 80px;
+    background: rgba(212,165,74,0.08);
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>ALCHEMIZE</h1>
+<div class="sub">Logo Explorations — Direction D: The Alchemical Vessel</div>
+
+<div class="logo-grid">
+
+  <!-- D1: Classic Hexagram -->
+  <div class="logo-card">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer circle -->
+      <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <!-- Thin ring -->
+      <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(212,165,74,0.08)" stroke-width="0.5" stroke-dasharray="4 8"/>
+      <!-- Upward triangle (gold) -->
+      <polygon points="100,15 170,155 30,155" fill="none" stroke="#D4A54A" stroke-width="1.8" opacity="0.8"/>
+      <!-- Downward triangle (white) -->
+      <polygon points="100,185 170,45 30,45" fill="none" stroke="#FFFFFF" stroke-width="1.8" opacity="0.6"/>
+      <!-- Center dot -->
+      <circle cx="100" cy="100" r="3" fill="#D4A54A"/>
+    </svg>
+    <div class="label">D1 · Classic Hexagram</div>
+    <div class="desc">Upward triangle (gold) = reaching toward light<br>Downward triangle (white) = shadow descending<br>6 outer points + 3 intersections = 9</div>
+  </div>
+
+  <!-- D2: Central Seed -->
+  <div class="logo-card">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer circle -->
+      <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <!-- Upward triangle (gold, doesn't reach center) -->
+      <polygon points="100,20 165,145 35,145" fill="none" stroke="#D4A54A" stroke-width="1.5" opacity="0.7"/>
+      <!-- Downward triangle (white, doesn't reach center) -->
+      <polygon points="100,180 165,55 35,55" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.5"/>
+      <!-- Central seed circle -->
+      <circle cx="100" cy="100" r="12" fill="none" stroke="#D4A54A" stroke-width="1.2"/>
+      <circle cx="100" cy="100" r="4" fill="#D4A54A" opacity="0.8"/>
+      <!-- Gap between triangles and center -->
+    </svg>
+    <div class="label">D2 · The Seed</div>
+    <div class="desc">Triangles don't touch — the center is held sacred<br>Gap = space between shadow and light<br>Seed = the self yet to be completed</div>
+  </div>
+
+  <!-- D3: Nested (not interlocked) -->
+  <div class="logo-card">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer circle -->
+      <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <!-- Outward triangle (large, gold) -->
+      <polygon points="100,25 155,140 45,140" fill="none" stroke="#D4A54A" stroke-width="2" opacity="0.8"/>
+      <!-- Inner triangle (inverted, thinner, inset) -->
+      <polygon points="100,160 140,70 60,70" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.5"/>
+      <!-- Center -->
+      <circle cx="100" cy="100" r="2" fill="#D4A54A"/>
+    </svg>
+    <div class="label">D3 · Nested</div>
+    <div class="desc">One triangle inside another — not crossing<br>Outer gold = container of the work<br>Inner white = the shadow held within</div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<div class="logo-grid">
+
+  <!-- D4: Broken/Asymmetrical -->
+  <div class="logo-card">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer circle -->
+      <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <!-- Broken upward triangle (dashed) -->
+      <polygon points="100,20 168,150 32,150" fill="none" stroke="#D4A54A" stroke-width="1.5" opacity="0.7" stroke-dasharray="6 4"/>
+      <!-- Solid downward triangle -->
+      <polygon points="100,180 168,50 32,50" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.5"/>
+      <!-- Small circle at apex -->
+      <circle cx="100" cy="20" r="4" fill="none" stroke="#D4A54A" stroke-width="1"/>
+    </svg>
+    <div class="label">D4 · Broken Threshold</div>
+    <div class="desc">One triangle dashed = the work is incomplete<br>One solid = the shadow is always there<br>Small circle at top = the goal visible but not reached</div>
+  </div>
+
+  <!-- D5: Hexagram with 3-ring center -->
+  <div class="logo-card">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer circle -->
+      <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+      <!-- Hexagram (both triangles equal weight, gold) -->
+      <polygon points="100,15 175,160 25,160" fill="none" stroke="#D4A54A" stroke-width="1.2" opacity="0.6"/>
+      <polygon points="100,185 175,40 25,40" fill="none" stroke="#D4A54A" stroke-width="1.2" opacity="0.6"/>
+      <!-- 3 concentric rings at center -->
+      <circle cx="100" cy="100" r="10" fill="none" stroke="#D4A54A" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="100" cy="100" r="6" fill="none" stroke="#FFFFFF" stroke-width="0.6" opacity="0.4"/>
+      <circle cx="100" cy="100" r="2" fill="#D4A54A" opacity="0.8"/>
+    </svg>
+    <div class="label">D5 · Three Rings</div>
+    <div class="desc">Both triangles in gold — unity of light and shadow<br>3 concentric rings at center = the 3 inputs<br>Outer = 6 points, inner = 3 rings, total = 9</div>
+  </div>
+
+  <!-- D6: Empty Vessel -->
+  <div class="logo-card">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Thick outer circle -->
+      <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2.5"/>
+      <!-- Inner thin circle -->
+      <circle cx="100" cy="100" r="75" fill="none" stroke="rgba(212,165,74,0.06)" stroke-width="0.5"/>
+      <!-- Very faint triangles -->
+      <polygon points="100,25 150,130 50,130" fill="none" stroke="#D4A54A" stroke-width="0.8" opacity="0.25"/>
+      <polygon points="100,175 150,70 50,70" fill="none" stroke="#FFFFFF" stroke-width="0.8" opacity="0.15"/>
+      <!-- Golden arc at top -->
+      <path d="M 30,100 A 70,70 0 0,1 170,100" fill="none" stroke="#D4A54A" stroke-width="1.2" opacity="0.6"/>
+      <!-- Small diamond at bottom -->
+      <polygon points="100,175 108,165 100,155 92,165" fill="none" stroke="#D4A54A" stroke-width="0.8" opacity="0.4"/>
+    </svg>
+    <div class="label">D6 · The Empty Vessel</div>
+    <div class="desc">Thick container = the practice itself<br>Faint inner geometry = the hidden engine (astrology)<br>Gold arc at top + diamond at bottom = the work's span</div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<div style="max-width:600px; text-align:center; margin-top:20px;">
+  <div style="font-family:'EB Garamond',serif; font-weight:600; font-size:18px; color:#D4A54A; margin-bottom:12px;">The 3-6-9 in the geometry</div>
+  <p style="font-size:13px; color:#6B6660; line-height:1.7;">
+    <strong style="color:#A09A90;">3</strong> — The triangles (two interlocking, or the three elements of the emblem)<br>
+    <strong style="color:#A09A90;">6</strong> — The outer points of the star, or the spaces between intersections<br>
+    <strong style="color:#A09A90;">9</strong> — The total: 6 points + 3 intersections, or 3 rings × 3 axes, or 3+6
+  </p>
+</div>
+
+</body>
+</html>

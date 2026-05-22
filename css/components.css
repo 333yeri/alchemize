@@ -401,8 +401,7 @@
   font-size: 13px; letter-spacing: 1px;
   padding: 6px 14px;
   font-weight: 500;
-  background: var(--filigree-edge);
-  border: 1px solid var(--border-glow);
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
   opacity: 0;
   transform: translateY(4px);
@@ -415,14 +414,12 @@
 }
 @keyframes sigil-reveal {
   0% { opacity: 0; transform: translateY(8px) scale(0.9); box-shadow: none; }
-  60% { opacity: 1; transform: translateY(-2px) scale(1.05); box-shadow: 0 0 20px var(--filigree-glow); }
-  100% { opacity: 1; transform: translateY(0) scale(1); box-shadow: 0 0 8px var(--filigree-edge); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.05); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 .sig-digits {
   font-size: 22px; font-weight: 600;
-  background: linear-gradient(135deg, var(--filigree), var(--filigree-bright));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 /* Journal area */
@@ -494,20 +491,39 @@
 /* Offer section */
 .offer-card {
   text-align: center;
-  background: linear-gradient(135deg, var(--void-card), rgba(201,168,76,0.06));
-  border: 1px solid rgba(201,168,76,0.2);
+  background: var(--void-card);
+  border: 1px solid var(--border-subtle);
 }
-.offer-price { font-family: 'Instrument Serif', serif; font-size: 48px; color: var(--filigree); }
-.offer-label { font-size: 12px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
-.offer-sub { font-size: 14px; opacity: 0.7; margin-top: 8px; }
+.offer-price { font-family: 'Instrument Serif', serif; font-size: 48px; color: var(--text-primary); font-weight: 400; letter-spacing: -0.03em; }
+.offer-label { font-size: 11px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+.offer-sub { font-size: 13px; color: var(--text-dim); margin-top: 8px; letter-spacing: 0.02em; }
 .spot-counter {
   display: inline-flex; align-items: center; gap: 8px;
   margin: 16px 0; padding: 8px 20px;
-  background: rgba(201,168,76,0.08);
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 13px;
 }
-.spot-counter .spots-num { font-weight: 700; color: var(--filigree); font-size: 18px; }
+.spot-counter .spots-num { font-weight: 600; color: var(--text-primary); font-size: 16px; }
+
+/* Feature list dots */
+.feature-dot {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: var(--text-dim);
+  border-radius: 50%;
+  margin: 0 8px;
+  vertical-align: middle;
+}
+.feature-dot:first-child { margin-left: 0; }
+
+/* Sigil labels */
+.sigil-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--text-dim); font-weight: 500;
+}
+.sigil-label svg { opacity: 0.6; }
 
 /* Nav */
 #nav {
@@ -538,7 +554,7 @@
 }
 .nav-btn .nav-icon { font-size: 20px; }
 .nav-btn.active {
-  background: rgba(201,168,76,0.12);
-  color: var(--filigree);
+  background: rgba(255,255,255,0.10);
+  color: var(--text-primary);
 }
 .nav-btn:hover:not(.active) { color: var(--text-primary); }

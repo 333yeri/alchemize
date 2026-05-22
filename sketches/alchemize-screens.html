@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alchemize — Screen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #000000;
+    color: #FFFFFF;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 20px;
+  }
+  .phone-frame {
+    width: 375px; border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    background: #000000;
+    box-shadow: 0 0 60px rgba(212,165,74,0.03), 0 0 120px rgba(0,0,0,0.8);
+  }
+  .phone-notch {
+    height: 30px; background: #000;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .phone-notch div { width: 120px; height: 6px; background: #1a1a1a; border-radius: 3px; }
+  .phone-content {
+    padding: 20px 20px 70px;
+    min-height: 740px;
+    display: flex; flex-direction: column;
+  }
+  .screen-label {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.15); text-align: center;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-family: 'Inter', sans-serif; font-weight: 500;
+  }
+
+  /* ===== SPLASH ===== */
+  .splash-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 740px; text-align: center;
+  }
+  .seed-sigil {
+    width: 80px; height: 80px; margin-bottom: 36px;
+    position: relative;
+  }
+  .seed-sigil svg { animation: spin 20s linear infinite; width: 100%; height: 100%; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .splash-title {
+    font-family: 'EB Garamond', serif; font-weight: 700;
+    font-size: 38px; letter-spacing: 0.12em; color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+  .splash-subtitle {
+    font-family: 'EB Garamond', serif; font-weight: 400;
+    font-size: 16px; color: #D4A54A; letter-spacing: 0.08em;
+    margin-bottom: 28px;
+  }
+  .splash-dots { display: flex; gap: 6px; }
+  .splash-dots span {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: #D4A54A; animation: pulse 2s infinite;
+  }
+  .splash-dots span:nth-child(2) { animation-delay: 0.3s; }
+  .splash-dots span:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes pulse { 0%,100% { opacity: 0.15; } 50% { opacity: 0.6; } }
+
+  /* Arcana screen fade steps */
+  @keyframes fadeStep1 {
+    0%, 15% { opacity: 0; transform: translateY(12px); }
+    20%, 40% { opacity: 1; transform: translateY(0); }
+    45%, 100% { opacity: 0.3; transform: translateY(-4px); }
+  }
+  @keyframes fadeStep2 {
+    0%, 30% { opacity: 0; transform: translateY(12px); }
+    35%, 55% { opacity: 1; transform: translateY(0); }
+    60%, 100% { opacity: 0.3; transform: translateY(-4px); }
+  }
+  @keyframes fadeStep3 {
+    0%, 45% { opacity: 0; transform: translateY(12px); }
+    50%, 70% { opacity: 1; transform: translateY(0); }
+    75%, 100% { opacity: 0.3; transform: translateY(-4px); }
+  }
+  @keyframes fadeStep4 {
+    0%, 60% { opacity: 0; transform: translateY(12px); }
+    70%, 90% { opacity: 1; transform: translateY(0); }
+    95%, 100% { opacity: 0.3; transform: translateY(-4px); }
+  }
+
+  /* ===== INVITATION ===== */
+  .invitation-screen {
+    display: flex; flex-direction: column; justify-content: center;
+    min-height: 740px; padding: 40px 20px;
+  }
+  .invitation-sigil { width: 60px; height: 60px; margin: 0 auto 44px; }
+  .invitation-sigil svg { width: 100%; height: 100%; }
+  .invitation-text {
+    font-family: 'EB Garamond', serif; font-weight: 500;
+    font-size: 22px; line-height: 1.6; text-align: center;
+    color: rgba(255,255,255,0.85); margin-bottom: 36px;
+    letter-spacing: 0.02em;
+  }
+  .invitation-text .gold { color: #D4A54A; }
+  .btn-primary {
+    width: 100%; padding: 16px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.08);
+    color: #FFFFFF; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Inter', -apple-system, sans-serif;
+    text-align: center; letter-spacing: 0.02em;
+  }
+  .btn-primary:active { transform: scale(0.97); background: rgba(255,255,255,0.14); }
+
+  /* ===== TRIPLE INPUT ===== */
+  .triple-screen { padding: 10px 0; flex: 1; }
+  .triple-header { text-align: center; margin-bottom: 28px; }
+  .triple-header .step-num {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #6B6660; margin-bottom: 4px;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+  }
+  .triple-header h2 {
+    font-family: 'EB Garamond', serif; font-weight: 700;
+    font-size: 24px; color: #FFFFFF; letter-spacing: 0.02em;
+  }
+  .triple-header p {
+    font-size: 14px; color: #A09A90; line-height: 1.5; margin-top: 8px;
+    font-family: 'Inter', sans-serif; font-weight: 400;
+  }
+  .triple-card {
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 20px; margin-bottom: 12px;
+    background: rgba(8,8,8,0.9);
+  }
+  .triple-card .card-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 1px solid #D4A54A; color: #D4A54A;
+    font-size: 11px; font-weight: 700; margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+  .triple-card .card-question {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 18px; line-height: 1.5; color: rgba(255,255,255,0.9);
+    margin-bottom: 12px;
+  }
+  .triple-card .card-input {
+    width: 100%; min-height: 70px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 12px;
+    color: rgba(255,255,255,0.6); font-size: 15px;
+    font-family: 'EB Garamond', serif; line-height: 1.6;
+    outline: none;
+  }
+
+  /* ===== EPIGRAPH ===== */
+  .epigraph-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 740px; text-align: center; padding: 60px 40px;
+  }
+  .epigraph-quote {
+    font-family: 'EB Garamond', serif; font-weight: 500;
+    font-size: 26px; line-height: 1.5; color: #D4A54A;
+    max-width: 320px; margin-bottom: 28px;
+  }
+  .epigraph-breath {
+    font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.12);
+  }
+
+  /* ===== LAW BAR (BOLDER, APPLE-STYLE) ===== */
+  .law-bar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; margin-bottom: 20px;
+    background: rgba(212,165,74,0.04);
+  }
+  .law-bar .law-symbol {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid rgba(212,165,74,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .law-bar .law-text { flex: 1; }
+  .law-bar .law-text .top {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #6B6660; margin-bottom: 2px;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+  }
+  .law-bar .law-text .name {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 700; font-size: 20px; letter-spacing: -0.02em;
+    color: #D4A54A;
+  }
+  .law-bar .law-text .desc {
+    font-size: 12px; color: #A09A90; line-height: 1.4; margin-top: 4px;
+    font-family: 'Inter', sans-serif; font-weight: 400;
+  }
+
+  /* ===== PRACTICE HEADER ===== */
+  .practice-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .practice-header .symbol {
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+    font-size: 18px; color: #D4A54A;
+  }
+  .practice-header .name {
+    font-family: 'EB Garamond', serif; font-weight: 700;
+    font-size: 22px; color: #FFFFFF; letter-spacing: 0.01em;
+  }
+  .practice-header .element {
+    margin-left: auto; font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #6B6660;
+    border: 1px solid rgba(255,255,255,0.06); padding: 3px 10px;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+  }
+  .practice-instruct {
+    font-family: 'EB Garamond', serif; font-weight: 500;
+    font-size: 16px; line-height: 1.6; color: #A09A90;
+    margin: 4px 0 16px;
+  }
+
+  /* ===== MIRROR ===== */
+  .mirror-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    flex: 1;
+  }
+  .mirror-col { display: flex; flex-direction: column; gap: 6px; }
+  .mirror-col .label {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 8px; border-radius: 6px;
+    text-align: center;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+  }
+  .mirror-col .label.me { background: rgba(45,107,138,0.15); color: #4A9FD4; border: 1px solid rgba(45,107,138,0.2); }
+  .mirror-col .label.shadow { background: rgba(138,45,80,0.15); color: #D44A8A; border: 1px solid rgba(138,45,80,0.2); }
+  .mirror-col textarea {
+    font-family: 'EB Garamond', serif; font-size: 15px; line-height: 1.6;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 10px;
+    color: rgba(255,255,255,0.6);
+    min-height: 140px; outline: none;
+    width: 100%;
+  }
+
+  /* ===== VESSEL ===== */
+  .breath-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+    margin: 16px 0; flex: 1;
+  }
+  .breath-cell {
+    aspect-ratio: 1; border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.2);
+    font-family: 'Inter', sans-serif;
+  }
+  .breath-cell.filled { background: rgba(212,165,74,0.12); border-color: rgba(212,165,74,0.3); color: #D4A54A; }
+  .breath-cell.active { border-color: #D4A54A; background: rgba(212,165,74,0.08); }
+  .breath-hint {
+    font-size: 11px; color: #6B6660; text-align: center;
+    letter-spacing: 0.1em; margin-top: 8px;
+    font-family: 'Inter', sans-serif; font-weight: 500;
+  }
+
+  /* ===== EQUATION ===== */
+  .equation-table { flex: 1; }
+  .equation-row {
+    display: grid; grid-template-columns: 1fr 1fr 30px;
+    gap: 8px; margin-bottom: 8px;
+  }
+  .equation-row .eq-field {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 10px;
+    font-family: 'EB Garamond', serif; font-size: 14px;
+    color: rgba(255,255,255,0.7); min-height: 55px;
+    line-height: 1.5;
+  }
+  .equation-row .eq-field.crossed {
+    text-decoration: line-through; opacity: 0.3;
+  }
+  .equation-row .eq-x {
+    display: flex; align-items: center; justify-content: center;
+    color: #D44A4A; font-size: 20px; cursor: pointer;
+  }
+
+  /* ===== BETWEEN SESSIONS ===== */
+  .phase-progress {
+    display: flex; gap: 4px; justify-content: center; margin-bottom: 32px;
+  }
+  .phase-progress .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .phase-progress .dot.completed { background: #D4A54A; border-color: #D4A54A; }
+  .phase-progress .dot.current { border-color: #D4A54A; }
+  .phase-progress .dot.locked { opacity: 0.2; }
+
+  .between-phase-label {
+    text-align: center; margin-bottom: 24px;
+  }
+  .between-phase-label .phase-name {
+    font-family: 'EB Garamond', serif; font-weight: 700;
+    font-size: 24px; color: #FFFFFF;
+  }
+  .between-phase-label .phase-sub {
+    font-size: 12px; color: #6B6660; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 4px;
+    font-family: 'Inter', sans-serif; font-weight: 500;
+  }
+  .session-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .session-cell {
+    aspect-ratio: 1; border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 4px;
+  }
+  .session-cell .s-num { font-size: 12px; color: #6B6660; font-family: 'Inter', sans-serif; font-weight: 600; }
+  .session-cell .s-icon { font-size: 14px; }
+  .session-cell.completed { border-color: rgba(212,165,74,0.2); background: rgba(212,165,74,0.04); }
+  .session-cell.completed .s-num { color: #D4A54A; }
+  .session-cell.current { border-color: #D4A54A; background: rgba(212,165,74,0.06); }
+  .session-cell.current .s-num { color: #FFFFFF; }
+  .session-cell.locked { opacity: 0.15; }
+
+  .last-session-card {
+    margin-top: 20px; padding: 14px;
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 12px;
+  }
+  .last-session-card .ls-label {
+    font-size: 11px; color: #6B6660; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 6px;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+  }
+  .last-session-card .ls-text {
+    font-family: 'EB Garamond', serif; font-size: 16px; line-height: 1.5;
+    color: #A09A90; font-weight: 500;
+  }
+
+  /* ===== PRICING ===== */
+  .pricing-tier {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px; padding: 20px;
+    margin-bottom: 10px;
+    background: rgba(8,8,8,0.9);
+  }
+  .pricing-tier.featured {
+    border-color: rgba(212,165,74,0.25);
+    background: rgba(212,165,74,0.03);
+  }
+  .pricing-tier .tier-name {
+    font-family: 'Inter', -apple-system, sans-serif; font-weight: 700;
+    font-size: 16px; color: #FFFFFF; margin-bottom: 4px; letter-spacing: -0.01em;
+  }
+  .pricing-tier .tier-price {
+    font-family: 'EB Garamond', serif; font-weight: 700;
+    font-size: 38px; color: #D4A54A; letter-spacing: -0.02em;
+  }
+  .pricing-tier .tier-price .period {
+    font-size: 15px; font-weight: 500; color: #6B6660;
+  }
+  .pricing-tier .tier-copy {
+    font-size: 13px; color: #A09A90; line-height: 1.5;
+    margin: 10px 0 16px;
+    font-family: 'Inter', sans-serif; font-weight: 400;
+  }
+  .pricing-footer {
+    font-size: 11px; color: #6B6660; text-align: center;
+    margin-top: 16px; line-height: 1.5;
+    font-family: 'Inter', sans-serif; font-weight: 400;
+  }
+
+  /* ===== 7 LAWS OVERVIEW ===== */
+  .laws-overview {
+    padding: 20px 0; flex: 1;
+  }
+  .laws-overview .laws-title {
+    text-align: center; margin-bottom: 20px;
+  }
+  .laws-overview .laws-title .top {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #6B6660; margin-bottom: 4px;
+    font-family: 'Inter', sans-serif; font-weight: 700;
+  }
+  .laws-overview .laws-title h2 {
+    font-family: 'EB Garamond', serif; font-weight: 700;
+    font-size: 24px; color: #D4A54A;
+  }
+  .law-card {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px; padding: 16px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(8,8,8,0.9);
+  }
+  .law-card .lc-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(212,165,74,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .law-card .lc-text { flex: 1; }
+  .law-card .lc-text .lc-name {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 700; font-size: 16px; letter-spacing: -0.02em;
+    color: #D4A54A; margin-bottom: 1px;
+  }
+  .law-card .lc-text .lc-desc {
+    font-size: 12px; color: #A09A90; line-height: 1.4;
+    font-family: 'Inter', sans-serif; font-weight: 400;
+  }
+
+  /* ===== NAV ===== */
+  .nav-bar {
+    display: flex; justify-content: space-around;
+    padding: 10px 16px 16px;
+    background: linear-gradient(to top, #000000 60%, transparent);
+    position: absolute; bottom: 0; left: 0; right: 0;
+  }
+  .nav-item {
+    width: 40px; height: 40px; display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0.2;
+  }
+  .nav-item.active { opacity: 0.7; }
+  .nav-item svg { width: 22px; height: 22px; stroke: #FFFFFF; fill: none; stroke-width: 1.5; stroke-linecap: round; }
+
+  /* ===== GIFTS (bonus screen) ===== */
+  .gift-practice {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center;
+  }
+  .gift-question {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 20px; line-height: 1.5; color: rgba(255,255,255,0.85);
+    text-align: center; margin-bottom: 16px;
+  }
+  .gift-field {
+    width: 100%; min-height: 120px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 14px;
+    color: rgba(255,255,255,0.6); font-size: 16px;
+    font-family: 'EB Garamond', serif; line-height: 1.6;
+    outline: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="phone-content" id="screen-content">
+    <!-- Content injected by JS based on ?screen= param -->
+  </div>
+</div>
+
+<script>
+var screen = new URLSearchParams(window.location.search).get('s') || 'splash';
+
+var screens = {
+  splash: function() {
+    return '<div class="splash-screen">' +
+      '<div class="seed-sigil">' +
+      '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/><circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.4" stroke-dasharray="10 6"/><circle cx="50" cy="50" r="25" fill="none" stroke="rgba(212,165,74,0.15)" stroke-width="0.6"/><circle cx="50" cy="50" r="15" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.3"/><line x1="50" y1="5" x2="50" y2="95" stroke="rgba(255,255,255,0.04)" stroke-width="0.3"/><line x1="5" y1="50" x2="95" y2="50" stroke="rgba(255,255,255,0.04)" stroke-width="0.3"/></svg>' +
+      '</div>' +
+      '<div class="splash-title">ALCHEMIZE</div>' +
+      '<div class="splash-subtitle">the work of becoming</div>' +
+      '<div class="splash-dots"><span></span><span></span><span></span></div>' +
+    '</div>';
+  },
+
+  invitation: function() {
+    return '<div class="invitation-screen">' +
+      '<div class="invitation-sigil"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(212,165,74,0.2)" stroke-width="0.8"/><path d="M50,10 L75,30 L75,70 L50,90 L25,70 L25,30 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/><circle cx="50" cy="50" r="20" fill="none" stroke="rgba(212,165,74,0.1)" stroke-width="0.5"/></svg></div>' +
+      '<div class="invitation-text">The parts of yourself you\'ve rejected<br>are not your enemy.<br><br>They are <span class="gold">your raw material</span>.</div>' +
+      '<div class="btn-primary">Begin</div>' +
+      '<div style="font-size:11px; color:#6B6660; text-align:center; margin-top:16px; font-family:\'Inter\',sans-serif; font-weight:400;">7-day trial · No payment required</div>' +
+    '</div>';
+  },
+
+  triple: function() {
+    return '<div class="screen-label">Your Configuration</div>' +
+      '<div class="triple-screen">' +
+      '<div class="triple-header">' +
+      '<div class="step-num">Step 1 of 3</div>' +
+      '<h2>The Shadow Fragment</h2>' +
+      '<p>Name one quality in another person that triggers you.<br>What about it is also in you?</p>' +
+      '</div>' +
+      '<div class="triple-card">' +
+      '<div class="card-num">1</div>' +
+      '<div class="card-question">"I can\'t stand when people are..."</div>' +
+      '<div class="card-input"></div>' +
+      '</div>' +
+      '<div class="triple-card" style="opacity:0.5;">' +
+      '<div class="card-num">2</div>' +
+      '<div class="card-question">Which area of your life feels most stuck?</div>' +
+      '<div class="card-input"></div>' +
+      '</div>' +
+      '<div class="triple-card" style="opacity:0.25;">' +
+      '<div class="card-num">3</div>' +
+      '<div class="card-question">What do you want to change but are terrified to admit?</div>' +
+      '<div class="card-input"></div>' +
+      '</div>' +
+      '</div>';
+  },
+
+  epigraph: function() {
+    return '<div class="epigraph-screen">' +
+      '<div class="epigraph-quote">"The obstacle is the path."</div>' +
+      '<div class="epigraph-breath">· · ·</div>' +
+    '</div>';
+  },
+
+  mirror: function() {
+    return '<div class="screen-label">Session 4 · Nigredo</div>' +
+      '<div class="law-bar">' +
+      '<div class="law-symbol">☿</div>' +
+      '<div class="law-text">' +
+      '<div class="top">The Law Co-Creating With You</div>' +
+      '<div class="name">Mentalism</div>' +
+      '<div class="desc">The All is Mind. What you believe is not what is true.</div>' +
+      '</div>' +
+      '</div>' +
+      '<div class="practice-header">' +
+      '<div class="symbol">⊞</div>' +
+      '<div class="name">The Mirror</div>' +
+      '<div class="element">Water</div>' +
+      '</div>' +
+      '<div class="practice-instruct">Write a letter to the quality in yourself you named. Do not edit. Read it aloud to the silence.</div>' +
+      '<div class="mirror-grid">' +
+      '<div class="mirror-col"><div class="label me">What I Notice</div><textarea placeholder="Your voice..." style="min-height:130px;"></textarea></div>' +
+      '<div class="mirror-col"><div class="label shadow">What It\'s Protecting</div><textarea placeholder="Let the shadow speak..." style="min-height:130px;"></textarea></div>' +
+      '</div>';
+  },
+
+  vessel: function() {
+    return '<div class="screen-label">Session 6 · Nigredo</div>' +
+      '<div class="law-bar">' +
+      '<div class="law-symbol">♃</div>' +
+      '<div class="law-text">' +
+      '<div class="top">The Law Co-Creating With You</div>' +
+      '<div class="name">Rhythm</div>' +
+      '<div class="desc">Everything flows in and out. Resistance is followed by release.</div>' +
+      '</div>' +
+      '</div>' +
+      '<div class="practice-header">' +
+      '<div class="symbol">⊕</div>' +
+      '<div class="name">The Vessel</div>' +
+      '<div class="element">Earth</div>' +
+      '</div>' +
+      '<div class="practice-instruct">Sit in stillness. When the emotion arises, do not name it. Breathe into the sensation for 9 breaths.</div>' +
+      '<div class="breath-grid">' +
+      '<div class="breath-cell filled">1</div>' +
+      '<div class="breath-cell filled">2</div>' +
+      '<div class="breath-cell filled">3</div>' +
+      '<div class="breath-cell filled">4</div>' +
+      '<div class="breath-cell active">5</div>' +
+      '<div class="breath-cell">6</div>' +
+      '<div class="breath-cell">7</div>' +
+      '<div class="breath-cell">8</div>' +
+      '<div class="breath-cell">9</div>' +
+      '</div>' +
+      '<div class="breath-hint">Tap each cell as you complete the breath</div>';
+  },
+
+  equation: function() {
+    return '<div class="screen-label">Session 7 · Albedo</div>' +
+      '<div class="law-bar">' +
+      '<div class="law-symbol">♀</div>' +
+      '<div class="law-text">' +
+      '<div class="top">The Law Co-Creating With You</div>' +
+      '<div class="name">Polarity</div>' +
+      '<div class="desc">Everything has its opposite. The quality you hate and the one you admire are the same energy.</div>' +
+      '</div>' +
+      '</div>' +
+      '<div class="practice-header">' +
+      '<div class="symbol">⌗</div>' +
+      '<div class="name">The Equation</div>' +
+      '<div class="element">Air</div>' +
+      '</div>' +
+      '<div class="practice-instruct">Two columns. What you believe about yourself. What you have evidence for. Cross out everything without evidence.</div>' +
+      '<div class="equation-table">' +
+      '<div class="equation-row">' +
+      '<div class="eq-field" style="color:#D4A54A;">I am not worthy of love</div>' +
+      '<div class="eq-field crossed">My mother left when I was 7</div>' +
+      '<div class="eq-x">✕</div>' +
+      '</div>' +
+      '<div class="equation-row">' +
+      '<div class="eq-field" style="color:#D4A54A;">I always fail at important things</div>' +
+      '<div class="eq-field crossed">Failed driving test twice, one relationship</div>' +
+      '<div class="eq-x">✕</div>' +
+      '</div>' +
+      '<div class="equation-row">' +
+      '<div class="eq-field" style="color:#D4A54A;">I am not brave</div>' +
+      '<div class="eq-field">I moved countries. I started this. I stayed when it got hard.</div>' +
+      '<div class="eq-x" style="opacity:0.15;">✕</div>' +
+      '</div>' +
+      '</div>';
+  },
+
+  between: function() {
+    return '<div class="screen-label">Nigredo · Session 5 of 9</div>' +
+      '<div class="phase-progress">' +
+      '<div class="dot completed"></div>' +
+      '<div class="dot current"></div>' +
+      '<div class="dot locked"></div>' +
+      '<div class="dot locked"></div>' +
+      '</div>' +
+      '<div class="between-phase-label">' +
+      '<div class="phase-name">Nigredo</div>' +
+      '<div class="phase-sub">The Blackening · Session 5 of 9</div>' +
+      '</div>' +
+      '<div class="session-grid">' +
+      '<div class="session-cell completed"><span class="s-icon">⊞</span><span class="s-num">S1</span></div>' +
+      '<div class="session-cell completed"><span class="s-icon">⌗</span><span class="s-num">S2</span></div>' +
+      '<div class="session-cell completed"><span class="s-icon">⊕</span><span class="s-num">S3</span></div>' +
+      '<div class="session-cell completed"><span class="s-icon">✦</span><span class="s-num">S4</span></div>' +
+      '<div class="session-cell current"><span class="s-num">S5</span></div>' +
+      '<div class="session-cell locked"><span class="s-num">S6</span></div>' +
+      '<div class="session-cell locked"><span class="s-num">S7</span></div>' +
+      '<div class="session-cell locked"><span class="s-num">S8</span></div>' +
+      '<div class="session-cell locked"><span class="s-num">S9</span></div>' +
+      '</div>' +
+      '<div class="last-session-card">' +
+      '<div class="ls-label">Last Session</div>' +
+      '<div class="ls-text">"I noticed the pattern again — the urge to retreat when things get intense. The shadow is not weakness. It\'s how I protected myself."</div>' +
+      '</div>';
+  },
+
+  pricing: function() {
+    return '<div class="screen-label">Choose Your Way</div>' +
+      '<div style="padding:10px 0; flex:1;">' +
+      '<div class="pricing-tier featured">' +
+      '<div class="tier-name">Founding Member</div>' +
+      '<div class="tier-price">€60 <span class="period">one time</span></div>' +
+      '<div class="tier-copy">You were here at the beginning. This is your price. Forever. 50 spots — 41 remaining.</div>' +
+      '<div class="btn-primary" style="font-size:14px; padding:14px;">Claim Your Spot</div>' +
+      '</div>' +
+      '<div class="pricing-tier">' +
+      '<div class="tier-name">Synchronicity</div>' +
+      '<div class="tier-price">€11.11 <span class="period">/ month</span></div>' +
+      '<div class="tier-copy">For those who see the pattern. Same practice. Different intention.</div>' +
+      '<div class="btn-primary" style="font-size:14px; padding:14px;">Subscribe</div>' +
+      '</div>' +
+      '<div class="pricing-tier">' +
+      '<div class="tier-name">Standard</div>' +
+      '<div class="tier-price">€9.99 <span class="period">/ month</span></div>' +
+      '<div class="tier-copy">Commit to the work. Cancel anytime.</div>' +
+      '<div class="btn-primary" style="font-size:14px; padding:14px;">Subscribe</div>' +
+      '</div>' +
+      '<div class="pricing-footer">7-day full trial. No payment method required.<br>Your data stays on your device. Always.</div>' +
+      '</div>';
+  },
+
+  laws: function() {
+    return '<div class="screen-label">The Laws</div>' +
+      '<div class="laws-overview">' +
+      '<div class="laws-title">' +
+      '<div class="top">The Universal Laws</div>' +
+      '<h2>7 laws · One reality</h2>' +
+      '</div>' +
+      '<div class="law-card">' +
+      '<div class="lc-icon">☿</div>' +
+      '<div class="lc-text"><div class="lc-name">Mentalism</div><div class="lc-desc">The All is Mind. The universe is mental.</div></div>' +
+      '</div>' +
+      '<div class="law-card">' +
+      '<div class="lc-icon">♄</div>' +
+      '<div class="lc-text"><div class="lc-name">Correspondence</div><div class="lc-desc">As above, so below. As within, so without.</div></div>' +
+      '</div>' +
+      '<div class="law-card">' +
+      '<div class="lc-icon">♀</div>' +
+      '<div class="lc-text"><div class="lc-name">Vibration</div><div class="lc-desc">Nothing rests. Everything moves. Everything vibrates.</div></div>' +
+      '</div>' +
+      '<div class="law-card">' +
+      '<div class="lc-icon">♀</div>' +
+      '<div class="lc-text"><div class="lc-name">Polarity</div><div class="lc-desc">Everything is dual. Opposites are identical in nature.</div></div>' +
+      '</div>' +
+      '<div class="law-card">' +
+      '<div class="lc-icon">♃</div>' +
+      '<div class="lc-text"><div class="lc-name">Rhythm</div><div class="lc-desc">Everything flows in and out. The pendulum swing.</div></div>' +
+      '</div>' +
+      '<div class="law-card">' +
+      '<div class="lc-icon">☿</div>' +
+      '<div class="lc-text"><div class="lc-name">Cause & Effect</div><div class="lc-desc">Every cause has its effect. Every effect its cause.</div></div>' +
+      '</div>' +
+      '<div class="law-card">' +
+      '<div class="lc-icon">♇</div>' +
+      '<div class="lc-text"><div class="lc-name">Gender</div><div class="lc-desc">Gender is in all things. Creation requires both.</div></div>' +
+      '</div>' +
+      '</div>';
+  },
+
+  gift: function() {
+    return '<div class="screen-label">Session 8 · Citrinitas</div>' +
+      '<div class="law-bar">' +
+      '<div class="law-symbol">♀</div>' +
+      '<div class="law-text">' +
+      '<div class="top">The Law Co-Creating With You</div>' +
+      '<div class="name">Vibration</div>' +
+      '<div class="desc">Every emotion is a frequency passing through the body. You are the room, not the sound.</div>' +
+      '</div>' +
+      '</div>' +
+      '<div class="practice-header">' +
+      '<div class="symbol">∞</div>' +
+      '<div class="name">The Gift</div>' +
+      '<div class="element">Air</div>' +
+      '</div>' +
+      '<div class="gift-practice">' +
+      '<div class="gift-question">If this quality was a gift you were given at birth, what would it be trying to protect in you?</div>' +
+      '<div class="gift-field"></div>' +
+      '</div>';
+  },
+  arcana: function() {
+    return '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:740px;text-align:center;padding:40px 20px;">' +
+      '<div style="width:60px;height:60px;margin-bottom:40px;">' +
+      '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(212,165,74,0.08)" stroke-width="0.5"/><circle cx="50" cy="50" r="35" fill="none" stroke="rgba(212,165,74,0.15)" stroke-width="1.5" stroke-dasharray="2 18" stroke-linecap="round"/><circle cx="50" cy="50" r="20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/><path d="M50,30 L50,70 M30,50 L70,50" stroke="rgba(212,165,74,0.2)" stroke-width="0.5"/></svg>' +
+      '</div>' +
+      '<div style="font-family:\'EB Garamond\',serif;font-weight:500;font-size:15px;line-height:1.7;color:#A09A90;max-width:300px;margin-bottom:32px;">' +
+      'The shadow is not your enemy.<br><span style="color:#D4A54A;">It is everything you were told not to be.</span>' +
+      '</div>' +
+      '<div style="width:1px;height:30px;background:rgba(212,165,74,0.1);margin-bottom:32px;"></div>' +
+      '<div style="font-family:\'EB Garamond\',serif;font-weight:500;font-size:15px;line-height:1.7;color:#A09A90;max-width:300px;margin-bottom:32px;">' +
+      'When you reject a part of yourself,<br>it does not disappear.<br><span style="color:#D4A54A;">It drives you from the dark.</span>' +
+      '</div>' +
+      '<div style="width:1px;height:30px;background:rgba(212,165,74,0.1);margin-bottom:32px;"></div>' +
+      '<div style="font-family:\'EB Garamond\',serif;font-weight:600;font-size:18px;line-height:1.6;color:#FFFFFF;max-width:300px;margin-bottom:32px;">' +
+      'Shadow work is the art of<br><span style="color:#D4A54A;">bringing light to what you hide.</span>' +
+      '</div>' +
+      '<div style="width:1px;height:30px;background:rgba(212,165,74,0.1);margin-bottom:32px;"></div>' +
+      '<div style="font-family:\'EB Garamond\',serif;font-weight:500;font-size:16px;line-height:1.6;color:#A09A90;max-width:300px;">' +
+      'When you own your shadow,<br>you stop being a victim of it.<br><span style="color:#D4A54A;">You become the author of your becoming.</span>' +
+      '</div>' +
+      '<div style="margin-top:auto;padding:16px;width:100%;">' +
+      '<div class="btn-primary">I am ready to reveal my shadow</div>' +
+      '</div>' +
+      '</div>';
+  }
+};
+
+document.getElementById('screen-content').innerHTML = (screens[screen] || screens['splash'])();
+</script>
+</body>
+</html>

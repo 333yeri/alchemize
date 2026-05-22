@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alchemize — Visual Sketch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #000000;
+    color: #FFFFFF;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 40px 16px;
+  }
+
+  /* Brand header */
+  .brand-header {
+    text-align: center; margin-bottom: 48px; max-width: 600px;
+  }
+  .brand-header h1 {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 48px; letter-spacing: 0.08em; color: #D4A54A;
+    margin-bottom: 8px;
+  }
+  .brand-header p {
+    font-family: 'EB Garamond', serif; font-weight: 400;
+    font-size: 18px; color: #A09A90; letter-spacing: 0.15em;
+  }
+  .brand-header .sub {
+    font-size: 13px; color: #6B6660; margin-top: 16px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  /* Phase color swatches */
+  .phase-row {
+    display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    margin-bottom: 48px;
+  }
+  .phase-chip {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 16px 20px; border-radius: 12px; min-width: 120px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .phase-chip .name { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; }
+  .phase-chip .hex { font-size: 11px; opacity: 0.5; font-family: 'Inter', monospace; }
+  .phase-chip.nigredo { background: #060A0F; }
+  .phase-chip.nigredo .name { color: #8B7D9B; }
+  .phase-chip.albedo { background: #0A0F1A; }
+  .phase-chip.albedo .name { color: #8FA4B8; }
+  .phase-chip.citrinitas { background: #0C0E14; }
+  .phase-chip.citrinitas .name { color: #D4A54A; }
+  .phase-chip.rubedo { background: #120A0A; }
+  .phase-chip.rubedo .name { color: #B56D6D; }
+
+  /* Phone mockup */
+  .phone-frame {
+    width: 375px; border-radius: 40px;
+    border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    background: #000000;
+    margin: 0 auto 32px;
+    position: relative;
+    box-shadow: 0 0 60px rgba(212,165,74,0.03), 0 0 120px rgba(0,0,0,0.8);
+  }
+  .phone-notch {
+    height: 30px; background: #000;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .phone-notch div { width: 120px; height: 6px; background: #1a1a1a; border-radius: 3px; }
+  .phone-content {
+    padding: 20px 20px 70px;
+    min-height: 700px;
+    display: flex; flex-direction: column;
+  }
+  .screen-label {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.15); text-align: center;
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  /* Section headers */
+  .section-title {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 24px; color: #D4A54A; text-align: center;
+    margin: 48px 0 24px; letter-spacing: 0.04em;
+  }
+  .section-subtitle {
+    font-size: 12px; color: #6B6660; text-align: center;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .screen-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 48px; max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* ===== SCREEN STYLES ===== */
+
+  /* Splash */
+  .splash-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 700px; text-align: center;
+  }
+  .seed-sigil {
+    width: 80px; height: 80px; margin-bottom: 32px;
+    position: relative;
+  }
+  .seed-sigil svg { animation: spin 20s linear infinite; width: 100%; height: 100%; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .splash-title {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 36px; letter-spacing: 0.12em; color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+  .splash-subtitle {
+    font-family: 'EB Garamond', serif; font-weight: 400;
+    font-size: 16px; color: #D4A54A; letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+  .splash-dots { display: flex; gap: 6px; }
+  .splash-dots span {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: #D4A54A; animation: pulse 2s infinite;
+  }
+  .splash-dots span:nth-child(2) { animation-delay: 0.3s; }
+  .splash-dots span:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes pulse { 0%,100% { opacity: 0.15; } 50% { opacity: 0.6; } }
+
+  /* Invitation screen */
+  .invitation-screen {
+    display: flex; flex-direction: column; justify-content: center;
+    min-height: 700px; padding: 20px;
+  }
+  .invitation-sigil {
+    width: 60px; height: 60px; margin: 0 auto 40px;
+  }
+  .invitation-sigil svg { width: 100%; height: 100%; }
+  .invitation-text {
+    font-family: 'EB Garamond', serif; font-weight: 500;
+    font-size: 20px; line-height: 1.6; text-align: center;
+    color: rgba(255,255,255,0.85); margin-bottom: 32px;
+    letter-spacing: 0.02em;
+  }
+  .invitation-text .gold { color: #D4A54A; }
+  .btn-primary {
+    width: 100%; padding: 16px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.08);
+    color: #FFFFFF; font-size: 15px; font-weight: 500;
+    cursor: pointer; transition: all 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+  }
+  .btn-primary:active { transform: scale(0.97); background: rgba(255,255,255,0.14); }
+
+  /* Triple Input */
+  .triple-screen { min-height: 700px; padding: 10px 0; }
+  .triple-header {
+    text-align: center; margin-bottom: 24px;
+  }
+  .triple-header .step-num {
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #6B6660; margin-bottom: 4px;
+  }
+  .triple-header h2 {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 22px; color: #FFFFFF; letter-spacing: 0.02em;
+  }
+  .triple-header p {
+    font-size: 14px; color: #A09A90; line-height: 1.5;
+    margin-top: 8px;
+  }
+  .triple-card {
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 20px;
+    margin-bottom: 12px;
+    background: rgba(8,8,8,0.9);
+    transition: border-color 0.3s;
+  }
+  .triple-card .card-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 1px solid #D4A54A; color: #D4A54A;
+    font-size: 11px; font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .triple-card .card-question {
+    font-family: 'EB Garamond', serif; font-weight: 500;
+    font-size: 17px; line-height: 1.5; color: rgba(255,255,255,0.9);
+    margin-bottom: 12px;
+  }
+  .triple-card .card-input {
+    width: 100%; min-height: 80px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 12px;
+    color: rgba(255,255,255,0.6); font-size: 14px;
+    font-family: 'EB Garamond', serif; line-height: 1.6;
+    outline: none; resize: none;
+  }
+
+  /* Session — Epigraph */
+  .epigraph-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 700px; text-align: center; padding: 40px 20px;
+  }
+  .epigraph-quote {
+    font-family: 'EB Garamond', serif; font-weight: 500;
+    font-size: 24px; line-height: 1.5; color: #D4A54A;
+    max-width: 320px; margin-bottom: 24px;
+    animation: fadeEpigraph 7s infinite;
+  }
+  @keyframes fadeEpigraph {
+    0%, 10% { opacity: 0; transform: translateY(8px); }
+    20%, 60% { opacity: 1; transform: translateY(0); }
+    80%, 100% { opacity: 0; transform: translateY(-4px); }
+  }
+  .epigraph-breath {
+    font-size: 11px; letter-spacing: 0.2em; color: rgba(255,255,255,0.12);
+    animation: pulse 2s infinite;
+  }
+
+  /* Session — Law Indicator */
+  .law-bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; margin-bottom: 16px;
+    background: rgba(212,165,74,0.04);
+  }
+  .law-bar .law-symbol { font-size: 20px; color: #D4A54A; }
+  .law-bar .law-text { flex: 1; }
+  .law-bar .law-text .top {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #6B6660; margin-bottom: 2px;
+  }
+  .law-bar .law-text .name {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 18px; color: #D4A54A;
+  }
+  .law-bar .law-text .desc {
+    font-size: 12px; color: #A09A90; line-height: 1.4; margin-top: 2px;
+  }
+
+  /* Session — The Mirror Practice */
+  .mirror-practice { padding: 10px 0; }
+  .practice-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .practice-header .symbol {
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+    font-size: 18px; color: #D4A54A;
+  }
+  .practice-header .name {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 20px; color: #FFFFFF;
+  }
+  .practice-header .element {
+    margin-left: auto; font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: #6B6660;
+    border: 1px solid rgba(255,255,255,0.06); padding: 3px 10px;
+    border-radius: 10px;
+  }
+  .mirror-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  }
+  .mirror-col { display: flex; flex-direction: column; gap: 6px; }
+  .mirror-col .label {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 8px; border-radius: 6px;
+    text-align: center; font-weight: 500;
+  }
+  .mirror-col .label.me { background: rgba(45,107,138,0.15); color: #4A9FD4; border: 1px solid rgba(45,107,138,0.2); }
+  .mirror-col .label.shadow { background: rgba(138,45,80,0.15); color: #D44A8A; border: 1px solid rgba(138,45,80,0.2); }
+  .mirror-col textarea {
+    font-family: 'EB Garamond', serif; font-size: 14px; line-height: 1.6;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px; padding: 10px;
+    color: rgba(255,255,255,0.7);
+    min-height: 120px; outline: none; resize: none;
+    width: 100%; transition: border-color 0.3s;
+  }
+
+  /* Session — The Vessel (breath practice) */
+  .breath-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+    margin: 16px 0;
+  }
+  .breath-cell {
+    aspect-ratio: 1; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: rgba(255,255,255,0.2);
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  .breath-cell.filled { background: rgba(212,165,74,0.12); border-color: rgba(212,165,74,0.3); color: #D4A54A; }
+  .breath-cell.active { border-color: #D4A54A; animation: breathePulse 4s ease infinite; }
+  @keyframes breathePulse {
+    0%, 100% { transform: scale(1); border-color: rgba(212,165,74,0.3); }
+    50% { transform: scale(1.05); border-color: #D4A54A; background: rgba(212,165,74,0.08); }
+  }
+  .breath-hint {
+    font-size: 11px; color: #6B6660; text-align: center;
+    letter-spacing: 0.1em; margin-top: 8px;
+  }
+
+  /* Session — The Equation */
+  .equation-table { margin: 16px 0; }
+  .equation-row {
+    display: grid; grid-template-columns: 1fr 1fr 30px;
+    gap: 8px; margin-bottom: 8px;
+  }
+  .equation-row .eq-field {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px; padding: 10px;
+    font-family: 'EB Garamond', serif; font-size: 14px;
+    color: rgba(255,255,255,0.7); min-height: 50px;
+  }
+  .equation-row .eq-field.crossed {
+    text-decoration: line-through;
+    opacity: 0.3;
+  }
+  .equation-row .eq-x {
+    display: flex; align-items: center; justify-content: center;
+    color: #D44A4A; font-size: 18px; cursor: pointer;
+  }
+
+  /* Between Sessions */
+  .between-screen { min-height: 700px; padding: 10px 0; }
+  .phase-progress {
+    display: flex; gap: 4px; justify-content: center; margin-bottom: 32px;
+  }
+  .phase-progress .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .phase-progress .dot.completed { background: #D4A54A; border-color: #D4A54A; }
+  .phase-progress .dot.current { border-color: #D4A54A; animation: pulse 2s infinite; }
+  .phase-progress .dot.locked { opacity: 0.2; }
+
+  /* Session grid */
+  .session-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .session-cell {
+    aspect-ratio: 1; border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 4px;
+    transition: all 0.3s;
+  }
+  .session-cell .s-num { font-size: 12px; color: #6B6660; }
+  .session-cell .s-icon { font-size: 14px; }
+  .session-cell.completed {
+    border-color: rgba(212,165,74,0.2);
+    background: rgba(212,165,74,0.04);
+  }
+  .session-cell.completed .s-num { color: #D4A54A; }
+  .session-cell.current {
+    border-color: #D4A54A;
+    background: rgba(212,165,74,0.06);
+  }
+  .session-cell.current .s-num { color: #FFFFFF; }
+  .session-cell.locked { opacity: 0.15; }
+
+  /* Pricing */
+  .pricing-screen { min-height: 700px; padding: 10px 0; }
+  .pricing-tier {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px; padding: 20px;
+    margin-bottom: 10px;
+    background: rgba(8,8,8,0.9);
+    transition: border-color 0.3s;
+  }
+  .pricing-tier.featured {
+    border-color: rgba(212,165,74,0.25);
+    background: rgba(212,165,74,0.03);
+  }
+  .pricing-tier .tier-name {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 18px; color: #FFFFFF; margin-bottom: 4px;
+  }
+  .pricing-tier .tier-price {
+    font-family: 'EB Garamond', serif; font-weight: 700;
+    font-size: 36px; color: #D4A54A;
+  }
+  .pricing-tier .tier-price .period {
+    font-size: 14px; font-weight: 400; color: #6B6660;
+  }
+  .pricing-tier .tier-copy {
+    font-size: 13px; color: #A09A90; line-height: 1.5;
+    margin: 8px 0 16px;
+  }
+
+  /* Nav */
+  .nav-bar {
+    display: flex; justify-content: space-around;
+    padding: 10px 16px 16px;
+    background: linear-gradient(to top, #000000 60%, transparent);
+    position: absolute; bottom: 0; left: 0; right: 0;
+  }
+  .nav-item {
+    width: 40px; height: 40px; display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0.2; transition: opacity 0.3s;
+  }
+  .nav-item.active { opacity: 0.7; }
+  .nav-item svg { width: 22px; height: 22px; stroke: #FFFFFF; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Law selector mockup */
+  .law-selector {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 16px;
+  }
+  .law-chip {
+    padding: 6px 14px; border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px; letter-spacing: 0.05em;
+    color: #6B6660; cursor: pointer;
+    transition: all 0.3s;
+  }
+  .law-chip.active {
+    border-color: #D4A54A; color: #D4A54A;
+    background: rgba(212,165,74,0.08);
+  }
+
+  /* Law detail card */
+  .law-detail {
+    border: 1px solid rgba(212,165,74,0.15);
+    border-radius: 14px; padding: 16px;
+    background: rgba(212,165,74,0.03);
+    margin-bottom: 16px;
+  }
+  .law-detail .law-head {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+  }
+  .law-detail .law-head .law-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid rgba(212,165,74,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .law-detail .law-head .law-name {
+    font-family: 'EB Garamond', serif; font-weight: 600;
+    font-size: 20px; color: #D4A54A;
+  }
+  .law-detail .law-desc {
+    font-size: 14px; line-height: 1.6; color: #A09A90;
+  }
+
+  /* Page description text */
+  .desc-text {
+    font-size: 13px; color: #6B6660; line-height: 1.6;
+    max-width: 375px; margin: 0 auto 32px; text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .screen-grid { grid-template-columns: 1fr 1fr; max-width: 800px; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="brand-header">
+  <h1>ALCHEMIZE</h1>
+  <p>the work of becoming</p>
+  <div class="sub">Visual Sketch · Design Direction v0</div>
+</div>
+
+<!-- Phase Colors -->
+<div class="phase-row">
+  <div class="phase-chip nigredo">
+    <div class="name">Nigredo</div>
+    <div class="hex">#060A0F · Fractured chaos</div>
+  </div>
+  <div class="phase-chip albedo">
+    <div class="name">Albedo</div>
+    <div class="hex">#0A0F1A · Coalescing clarity</div>
+  </div>
+  <div class="phase-chip citrinitas">
+    <div class="name">Citrinitas</div>
+    <div class="hex">#0C0E14 · Golden dawn</div>
+  </div>
+  <div class="phase-chip rubedo">
+    <div class="name">Rubedo</div>
+    <div class="hex">#120A0A · Embodied union</div>
+  </div>
+</div>
+
+<!-- 7 Hermetic Laws -->
+<div style="text-align:center; margin-bottom: 32px;">
+  <div style="font-family:'EB Garamond',serif; font-weight:600; font-size:22px; color:#D4A54A; margin-bottom:8px;">The 7 Universal Laws</div>
+  <div style="font-size:12px; color:#6B6660; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:16px;">Which law is co-creating with you right now?</div>
+  <div class="law-selector" style="justify-content:center; max-width:420px; margin:0 auto;">
+    <span class="law-chip active">Mentalism</span>
+    <span class="law-chip">Correspondence</span>
+    <span class="law-chip">Vibration</span>
+    <span class="law-chip">Polarity</span>
+    <span class="law-chip">Rhythm</span>
+    <span class="law-chip">Cause & Effect</span>
+    <span class="law-chip">Gender</span>
+  </div>
+</div>
+
+<div class="desc-text">
+  The 369 architecture stays in the backend. What the user sees is the 7 Hermetic Laws — which one is active in their session based on their hidden astrological reading. The law drives the practice selection, the tone, and the guidance.
+</div>
+
+<!-- SCREEN 1: Splash -->
+<div class="section-title">Splash</div>
+<div class="section-subtitle">The app composes itself for you</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="splash-screen">
+    <div class="seed-sigil">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+        <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.4" stroke-dasharray="10 6"/>
+        <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(212,165,74,0.15)" stroke-width="0.6"/>
+        <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.3"/>
+        <line x1="50" y1="5" x2="50" y2="95" stroke="rgba(255,255,255,0.04)" stroke-width="0.3"/>
+        <line x1="5" y1="50" x2="95" y2="50" stroke="rgba(255,255,255,0.04)" stroke-width="0.3"/>
+      </svg>
+    </div>
+    <div class="splash-title">ALCHEMIZE</div>
+    <div class="splash-subtitle">the work of becoming</div>
+    <div class="splash-dots"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<!-- SCREEN 2: Invitation -->
+<div class="section-title">Onboarding — Invitation</div>
+<div class="section-subtitle">No sign-up wall. No email. No permissions.</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="invitation-screen">
+    <div class="invitation-sigil">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(212,165,74,0.2)" stroke-width="0.8"/>
+        <path d="M50,10 L75,30 L75,70 L50,90 L25,70 L25,30 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+        <circle cx="50" cy="50" r="20" fill="none" stroke="rgba(212,165,74,0.1)" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="invitation-text">
+      The parts of yourself you've rejected<br>
+      are not your enemy.<br><br>
+      They are <span class="gold">your raw material</span>.
+    </div>
+    <div class="btn-primary">Begin</div>
+    <div style="font-size:11px; color:#6B6660; text-align:center; margin-top:16px;">
+      7-day trial · No payment required
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 3: Triple Input -->
+<div class="section-title">The Triple Input</div>
+<div class="section-subtitle">Three questions. One encoded sigil.</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="phone-content">
+    <div class="screen-label">Your Configuration</div>
+    <div class="triple-screen">
+      <div class="triple-header">
+        <div class="step-num">Step 1 of 3</div>
+        <h2>The Shadow Fragment</h2>
+        <p>Name one quality in another person that triggers you.<br>What about it is also in you?</p>
+      </div>
+      <div class="triple-card">
+        <div class="card-num">1</div>
+        <div class="card-question">"I can't stand when people are..."</div>
+        <div class="card-input" contenteditable style="min-height:60px;"></div>
+      </div>
+      <div class="triple-card" style="opacity:0.6;">
+        <div class="card-num">2</div>
+        <div class="card-question">Which area of your life feels most stuck?</div>
+        <div class="card-input" contenteditable style="min-height:60px;"></div>
+      </div>
+      <div class="triple-card" style="opacity:0.3;">
+        <div class="card-num">3</div>
+        <div class="card-question">What do you want to change but are terrified to admit?</div>
+        <div class="card-input" contenteditable style="min-height:60px;"></div>
+      </div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 4v3M17 4v3"/><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 12h8M8 16h5"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 8 16"/><path d="M12 2a10 10 0 0 0-8 16"/><circle cx="12" cy="12" r="2"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2L3 8l3 5 6 3 6-3 3-5z"/><path d="M3 8v8l9 6 9-6V8"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 4: Session Start — Epigraph + Law -->
+<div class="section-title">Session Start</div>
+<div class="section-subtitle">A universal truth, then the active law</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="epigraph-screen">
+    <div class="epigraph-quote">"The obstacle is the path."</div>
+    <div class="epigraph-breath">· · ·</div>
+  </div>
+</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="phone-content">
+    <div class="screen-label">Session 4 · Nigredo</div>
+    <div class="law-bar">
+      <div class="law-symbol">☿</div>
+      <div class="law-text">
+        <div class="top">The Law Co-Creating With You</div>
+        <div class="name">Mentalism</div>
+        <div class="desc">The All is Mind. What you believe is not what is true. What is true existed before you named it.</div>
+      </div>
+    </div>
+
+    <div class="practice-header" style="margin-top:20px;">
+      <div class="symbol">⊞</div>
+      <div class="name">The Mirror</div>
+      <div class="element">Water</div>
+    </div>
+    <div class="mirror-grid">
+      <div class="mirror-col">
+        <div class="label me">What I Notice</div>
+        <textarea placeholder="Your voice..." style="min-height:140px;"></textarea>
+      </div>
+      <div class="mirror-col">
+        <div class="label shadow">What It's Protecting</div>
+        <textarea placeholder="Let the shadow speak..." style="min-height:140px;"></textarea>
+      </div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 4v3M17 4v3"/><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 12h8M8 16h5"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 8 16"/><path d="M12 2a10 10 0 0 0-8 16"/><circle cx="12" cy="12" r="2"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2L3 8l3 5 6 3 6-3 3-5z"/><path d="M3 8v8l9 6 9-6V8"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 5: The Vessel Breath Practice -->
+<div class="section-title">Practice: The Vessel</div>
+<div class="section-subtitle">9 breaths. No naming. Just sensation.</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="phone-content">
+    <div class="screen-label">Session 6 · Nigredo</div>
+    <div class="law-bar">
+      <div class="law-symbol">♃</div>
+      <div class="law-text">
+        <div class="top">The Law Co-Creating With You</div>
+        <div class="name">Rhythm</div>
+        <div class="desc">Everything flows in and out. Resistance is followed by release. Clarity by confusion. By design.</div>
+      </div>
+    </div>
+    <div class="practice-header">
+      <div class="symbol">⊕</div>
+      <div class="name">The Vessel</div>
+      <div class="element">Earth</div>
+    </div>
+    <p style="font-family:'EB Garamond',serif; font-size:15px; line-height:1.6; color:#A09A90; margin:4px 0 12px;">
+      Sit in stillness. When the emotion arises, do not name it. Breathe into the sensation in your body for 9 breaths.
+    </p>
+    <div class="breath-grid">
+      <div class="breath-cell filled">1</div>
+      <div class="breath-cell filled">2</div>
+      <div class="breath-cell filled">3</div>
+      <div class="breath-cell filled">4</div>
+      <div class="breath-cell active">5</div>
+      <div class="breath-cell">6</div>
+      <div class="breath-cell">7</div>
+      <div class="breath-cell">8</div>
+      <div class="breath-cell">9</div>
+    </div>
+    <div class="breath-hint">Tap each cell as you complete the breath</div>
+    <div class="nav-bar">
+      <span class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 4v3M17 4v3"/><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 12h8M8 16h5"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 8 16"/><path d="M12 2a10 10 0 0 0-8 16"/><circle cx="12" cy="12" r="2"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2L3 8l3 5 6 3 6-3 3-5z"/><path d="M3 8v8l9 6 9-6V8"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 6: The Equation -->
+<div class="section-title">Practice: The Equation</div>
+<div class="section-subtitle">Belief vs Evidence</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="phone-content">
+    <div class="screen-label">Session 7 · Albedo</div>
+    <div class="law-bar">
+      <div class="law-symbol">♀</div>
+      <div class="law-text">
+        <div class="top">The Law Co-Creating With You</div>
+        <div class="name">Polarity</div>
+        <div class="desc">Everything has its pair of opposites. The quality you hate and the one you admire are the same energy at different poles.</div>
+      </div>
+    </div>
+    <div class="practice-header">
+      <div class="symbol">⌗</div>
+      <div class="name">The Equation</div>
+      <div class="element">Air</div>
+    </div>
+    <p style="font-family:'EB Garamond',serif; font-size:15px; line-height:1.6; color:#A09A90; margin:4px 0 12px;">
+      Write two columns. What you believe about yourself. What you have evidence for. Cross out everything without evidence.
+    </p>
+    <div class="equation-table">
+      <div class="equation-row">
+        <div class="eq-field" style="color:#D4A54A;">I am not worthy of love</div>
+        <div class="eq-field crossed">My mother left when I was 7</div>
+        <div class="eq-x">✕</div>
+      </div>
+      <div class="equation-row">
+        <div class="eq-field" style="color:#D4A54A;">I always fail at important things</div>
+        <div class="eq-field crossed">I failed my driving test twice, I failed one relationship</div>
+        <div class="eq-x">✕</div>
+      </div>
+      <div class="equation-row">
+        <div class="eq-field" style="color:#D4A54A;">I am not brave</div>
+        <div class="eq-field">I moved countries alone. I started this app. I stayed when it got hard.</div>
+        <div class="eq-x" style="opacity:0.15;">✕</div>
+      </div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 4v3M17 4v3"/><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 12h8M8 16h5"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 8 16"/><path d="M12 2a10 10 0 0 0-8 16"/><circle cx="12" cy="12" r="2"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2L3 8l3 5 6 3 6-3 3-5z"/><path d="M3 8v8l9 6 9-6V8"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 7: Between Sessions -->
+<div class="section-title">Between Sessions</div>
+<div class="section-subtitle">The sigil shows you where you are</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="phone-content">
+    <div class="screen-label">Nigredo · Session 5 of 9</div>
+
+    <div class="phase-progress">
+      <div class="dot completed"></div>
+      <div class="dot current"></div>
+      <div class="dot locked"></div>
+      <div class="dot locked"></div>
+    </div>
+
+    <div style="text-align:center; margin-bottom:24px;">
+      <div style="font-family:'EB Garamond',serif; font-weight:600; font-size:22px; color:#FFFFFF; letter-spacing:0.02em;">Nigredo</div>
+      <div style="font-size:12px; color:#6B6660; letter-spacing:0.1em; text-transform:uppercase; margin-top:4px;">The Blackening · Session 5 of 9</div>
+    </div>
+
+    <div class="session-grid">
+      <div class="session-cell completed"><span class="s-icon">⊞</span><span class="s-num">S1</span></div>
+      <div class="session-cell completed"><span class="s-icon">⌗</span><span class="s-num">S2</span></div>
+      <div class="session-cell completed"><span class="s-icon">⊕</span><span class="s-num">S3</span></div>
+      <div class="session-cell completed"><span class="s-icon">✦</span><span class="s-num">S4</span></div>
+      <div class="session-cell current"><span class="s-num">S5</span></div>
+      <div class="session-cell locked"><span class="s-num">S6</span></div>
+      <div class="session-cell locked"><span class="s-num">S7</span></div>
+      <div class="session-cell locked"><span class="s-num">S8</span></div>
+      <div class="session-cell locked"><span class="s-num">S9</span></div>
+    </div>
+
+    <div style="margin-top:20px; padding:14px; border:1px solid rgba(255,255,255,0.04); border-radius:12px;">
+      <div style="font-size:12px; color:#6B6660; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px;">Last Session</div>
+      <div style="font-family:'EB Garamond',serif; font-size:15px; line-height:1.5; color:#A09A90;">
+        "I noticed the pattern again — the urge to retreat when things get intense. The shadow showed me it's not weakness. It's how I protected myself when I had no other option."
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <span class="nav-item active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 4v3M17 4v3"/><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 12h8M8 16h5"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 8 16"/><path d="M12 2a10 10 0 0 0-8 16"/><circle cx="12" cy="12" r="2"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2L3 8l3 5 6 3 6-3 3-5z"/><path d="M3 8v8l9 6 9-6V8"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 8: Pricing -->
+<div class="section-title">Pricing</div>
+<div class="section-subtitle">Three tiers. One choice. No pressure.</div>
+
+<div class="phone-frame">
+  <div class="phone-notch"><div></div></div>
+  <div class="phone-content">
+    <div class="screen-label">Choose Your Way</div>
+    <div class="pricing-screen" style="min-height:auto;">
+
+      <div class="pricing-tier featured">
+        <div class="tier-name">Founding Member</div>
+        <div class="tier-price">€60 <span class="period">one time</span></div>
+        <div class="tier-copy">You were here at the beginning. This is your price. Forever. 50 spots — 41 remaining.</div>
+        <div class="btn-primary" style="font-size:14px; padding:14px;">Claim Your Spot</div>
+      </div>
+
+      <div class="pricing-tier">
+        <div class="tier-name">Synchronicity</div>
+        <div class="tier-price">€11.11 <span class="period">/ month</span></div>
+        <div class="tier-copy">For those who see the pattern. Same practice. Different intention.</div>
+        <div class="btn-primary" style="font-size:14px; padding:14px;">Subscribe</div>
+      </div>
+
+      <div class="pricing-tier">
+        <div class="tier-name">Standard</div>
+        <div class="tier-price">€9.99 <span class="period">/ month</span></div>
+        <div class="tier-copy">Commit to the work. Cancel anytime.</div>
+        <div class="btn-primary" style="font-size:14px; padding:14px;">Subscribe</div>
+      </div>
+
+      <div style="font-size:11px; color:#6B6660; text-align:center; margin-top:16px; line-height:1.5;">
+        7-day full trial. No payment method required.<br>
+        Your data stays on your device. Always.
+      </div>
+    </div>
+    <div class="nav-bar">
+      <span class="nav-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M4 7h16M7 4v3M17 4v3"/><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 12h8M8 16h5"/></svg></span>
+      <span class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 8 16"/><path d="M12 2a10 10 0 0 0-8 16"/><circle cx="12" cy="12" r="2"/></svg></span>
+      <span class="nav-item active"><svg viewBox="0 0 24 24"><path d="M12 2L3 8l3 5 6 3 6-3 3-5z"/><path d="M3 8v8l9 6 9-6V8"/></svg></span>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:600px; margin:48px auto; text-align:center;">
+  <div style="font-family:'EB Garamond',serif; font-weight:600; font-size:22px; color:#D4A54A; margin-bottom:12px;">What's Next</div>
+  <p style="font-size:14px; color:#A09A90; line-height:1.7;">
+    The 369 stays in the backend (triple input × six practices × nine-session cycle).<br>
+    The 7 Hermetic laws are the user-facing layer —<br>
+    "Which universal law is co-creating with you right now?"<br><br>
+    Each session activates one law (driven by hidden astrology),<br>
+    the law selects the practice, the practice guides the work.
+  </p>
+</div>
+
+</body>
+</html>
