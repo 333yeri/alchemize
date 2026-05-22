@@ -339,7 +339,7 @@ window.toggleGuidance = toggleGuidance;
 function renderPhaseHeader(today) {
   if (!today) return;
   const phase = today.alchemicalPhase;
-  document.getElementById('phase-symbol-header').textContent = PHASE_SYMBOL[phase] || '⚫';
+  document.getElementById('phase-symbol-header').textContent = PHASE_SYMBOL[phase] || '●';
   document.getElementById('phase-name-header').textContent = phase;
   document.getElementById('moon-info-header').textContent = `Moon in ${today.moonSign} ${SIGIL[today.moonSign] || ''} · ${today.moonPhase}`;
 }
@@ -377,9 +377,9 @@ function renderDailyView(today) {
   }
   document.getElementById('journal-prompt').textContent = today.prompt;
   document.getElementById('sig-digits').textContent = today.signature;
-  document.getElementById('prompt-moon-sign').textContent = `🌙 ${today.moonSign} ${SIGIL[today.moonSign] || ''}`;
-  document.getElementById('prompt-house').textContent = `🏠 House ${today.house}`;
-  document.getElementById('prompt-law').textContent = `⚖️ ${today.law}`;
+  document.getElementById('prompt-moon-sign').textContent = `◐ ${today.moonSign} ${SIGIL[today.moonSign] || ''}`;
+  document.getElementById('prompt-house').textContent = `▣ House ${today.house}`;
+  document.getElementById('prompt-law').textContent = `◈ ${today.law}`;
 }
 
 function renderSessionCounter() {
@@ -404,7 +404,7 @@ function renderEntriesList() {
   const reversed = [...sessions].reverse();
   for (const entry of reversed) {
     const preview = entry.writing ? entry.writing.substring(0, 80) + (entry.writing.length > 80 ? '...' : '') : '(empty)';
-    const practiceSym = entry.practiceSymbol || '✍️';
+    const practiceSym = entry.practiceSymbol || '⊡';
     const practiceName = entry.practiceName || '';
     html += `
       <div class="entry-item" data-idx="${sessions.indexOf(entry)}">
@@ -434,7 +434,7 @@ function renderSynthesis() {
     const remaining = 9 - (sessions.length % 9);
     container.innerHTML = `
       <div class="card text-center">
-        <p style="font-size:40px; margin-bottom:12px;">🌀</p>
+        <p style="font-size:40px; margin-bottom:12px;">◈</p>
         <p style="font-size:15px;">You need ${remaining} more session${remaining > 1 ? 's' : ''} to complete Cycle ${cycle}.</p>
         <p class="text-sm text-dim mt-8">Every 9 sessions unlocks a full synthesis.</p>
       </div>
@@ -582,8 +582,8 @@ function showEntryModal(idx) {
   document.getElementById('modal-body').innerHTML = `
     <p class="text-xs text-dim">${entry.date || 'Unknown date'} · ${entry.phase || ''}${practiceInfo}</p>
     <span class="sig-badge mt-8"><span>3·6·9</span><span class="sig-digits">${entry.signature || '—'}</span></span>
-    <div style="margin-top:16px; padding:16px; background:rgba(255,255,255,0.04); border-radius:12px; border-left:3px solid var(--filigree);">
-      <p style="font-family:'Instrument Serif',serif; font-style:italic; line-height:1.6; font-size:15px;">
+    <div style="margin-top:16px; padding:16px; background:rgba(255,255,255,0.04); border-radius:12px; border-left:3px solid var(--text-dim);">
+      <p style="font-family:'EB Garamond',serif; line-height:1.6; font-size:15px;">
         ${entry.prompt || 'No prompt recorded'}
       </p>
     </div>
