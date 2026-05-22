@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join — Alchemize</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  background: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container {
+  width: 100%;
+  max-width: 480px;
+  padding: 48px 24px;
+  text-align: center;
+}
+h1 {
+  font-family: 'EB Garamond', serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.subtitle {
+  font-size: 13px;
+  color: #6B6660;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.signature {
+  font-family: 'EB Garamond', serif;
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+}
+.desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #A09A90;
+  margin-bottom: 32px;
+  text-align: left;
+}
+.desc strong { color: #fff; font-weight: 500; }
+.offer-box {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+.price {
+  font-family: 'EB Garamond', serif;
+  font-size: 42px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.price-label {
+  font-size: 12px;
+  color: #6B6660;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.features {
+  text-align: left;
+  font-size: 14px;
+  line-height: 2;
+  color: #A09A90;
+}
+.features span {
+  display: block;
+}
+.features span::before {
+  content: "⊡ ";
+  color: #6B6660;
+}
+.form-group {
+  margin-bottom: 16px;
+}
+input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+input:focus { border-color: rgba(255,255,255,0.3); }
+input::placeholder { color: #6B6660; }
+.btn {
+  width: 100%;
+  padding: 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:active {
+  transform: scale(0.97);
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.5);
+}
+.btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+.success {
+  display: none;
+  padding: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  margin-top: 16px;
+}
+.success.show { display: block; }
+.success h2 {
+  font-family: 'EB Garamond', serif;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+.success p { font-size: 14px; color: #A09A90; line-height: 1.6; }
+.error-msg {
+  color: #D44A4A;
+  font-size: 13px;
+  margin-top: 8px;
+  display: none;
+}
+.error-msg.show { display: block; }
+.status-bar {
+  font-size: 11px;
+  color: #6B6660;
+  letter-spacing: 1px;
+  margin-top: 24px;
+}
+.divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin: 24px 0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Alchemize</h1>
+  <p class="subtitle">9-Day Email Exchange</p>
+  
+  <p class="signature">⊡</p>
+  
+  <div class="desc">
+    <p><strong>9 days. One email every morning. You write back if you want.</strong></p>
+    <br>
+    <p>No app. No guide. No promises I can't keep.</p>
+    <br>
+    <p>I spent 6 months alone on an island learning what shadow work actually costs — not in theory, in life. This is what I learned to write about it.</p>
+    <br>
+    <p>Each day I send you one piece. You read it. Sit with it. Reply if something hits. That's the whole thing.</p>
+  </div>
+  
+  <div class="offer-box">
+    <div class="price">€60</div>
+    <div class="price-label">One-time · Founding round</div>
+    <hr class="divider">
+    <div class="features">
+      <span>9 daily emails from me</span>
+      <span>One raw piece of writing each morning</span>
+      <span>You can reply — I'll read it</span>
+      <span>No sales, no upsell, no community</span>
+      <span>Just the exchange</span>
+    </div>
+  </div>
+  
+  <form id="join-form">
+    <div class="form-group">
+      <input type="text" id="name-input" placeholder="Your name (optional)" autocomplete="name">
+    </div>
+    <div class="form-group">
+      <input type="email" id="email-input" placeholder="Your email" required autocomplete="email">
+    </div>
+    <button type="submit" class="btn" id="join-btn">⊡ Join the Exchange</button>
+    <div class="error-msg" id="error-msg"></div>
+  </form>
+  
+  <div class="success" id="success">
+    <h2>You're in.</h2>
+    <p>Day 1 lands in your inbox tomorrow morning. Same time as the sky changes, something in you will too. <br><br>— Yeri</p>
+  </div>
+  
+  <p class="status-bar" id="status-bar"></p>
+</div>
+
+<script>
+const API_URL = 'http://138.201.244.47:3456';
+const form = document.getElementById('join-form');
+const emailInput = document.getElementById('email-input');
+const nameInput = document.getElementById('name-input');
+const joinBtn = document.getElementById('join-btn');
+const successDiv = document.getElementById('success');
+const errorMsg = document.getElementById('error-msg');
+const statusBar = document.getElementById('status-bar');
+
+// Show live count if available
+fetch(`${API_URL}/admin/stats?token=alchemize369`)
+  .then(r => r.json())
+  .then(d => {
+    statusBar.textContent = `${d.total || 0} people have joined`;
+  })
+  .catch(() => {
+    statusBar.textContent = '';
+  });
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = emailInput.value.trim();
+  const name = nameInput.value.trim();
+  
+  if (!email || !email.includes('@')) {
+    errorMsg.textContent = 'Enter a valid email.';
+    errorMsg.classList.add('show');
+    return;
+  }
+  
+  joinBtn.disabled = true;
+  joinBtn.textContent = 'Joining...';
+  errorMsg.classList.remove('show');
+  
+  try {
+    const res = await fetch(`${API_URL}/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, name })
+    });
+    const data = await res.json();
+    
+    if (data.error) {
+      errorMsg.textContent = data.error;
+      errorMsg.classList.add('show');
+      joinBtn.disabled = false;
+      joinBtn.textContent = '⊡ Join the Exchange';
+      return;
+    }
+    
+    form.style.display = 'none';
+    successDiv.classList.add('show');
+    statusBar.textContent = `${data.total} people have joined`;
+  } catch (err) {
+    errorMsg.textContent = 'Something went wrong. Try again or DM me.';
+    errorMsg.classList.add('show');
+    joinBtn.disabled = false;
+    joinBtn.textContent = '⊡ Join the Exchange';
+  }
+});
+</script>
+</body>
+</html>
